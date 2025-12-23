@@ -44,17 +44,14 @@ class Prediction(commands.Cog):
         if message.attachments:
             for attachment in message.attachments:
                 if any(attachment.filename.lower().endswith(ext) for ext in ['.png', '.jpg', '.jpeg', '.gif', '.webp']):
-                    print(f"[AUTO-PREDICT] Found attachment: {attachment.url}")
                     return attachment.url
         
         # Method 2: Check embeds
         if message.embeds:
             for embed in message.embeds:
                 if embed.image:
-                    print(f"[AUTO-PREDICT] Found embed image: {embed.image.url}")
                     return embed.image.url
                 if embed.thumbnail:
-                    print(f"[AUTO-PREDICT] Found embed thumbnail: {embed.thumbnail.url}")
                     return embed.thumbnail.url
         
         # Method 3: Check message content for URLs
@@ -62,13 +59,11 @@ class Prediction(commands.Cog):
         url_pattern = r'https?://[^\s<>"]+?\.(?:png|jpg|jpeg|gif|webp)'
         urls = re.findall(url_pattern, message.content, re.IGNORECASE)
         if urls:
-            print(f"[AUTO-PREDICT] Found URL in content: {urls[0]}")
             return urls[0]
         
         # Method 4: Use the utility function as fallback
         url = await get_image_url_from_message(message)
         if url:
-            print(f"[AUTO-PREDICT] Found via utility function: {url}")
             return url
         
         return None
@@ -260,17 +255,13 @@ class Prediction(commands.Cog):
         
         # Auto-predict any image in the designated channel (INCLUDING POKETWO)
         if AUTO_PREDICT_CHANNEL_ID and message.channel.id == AUTO_PREDICT_CHANNEL_ID:
-            print(f"[AUTO-PREDICT] Message detected in auto-predict channel from {message.author}")
-            
             image_url = await self.extract_image_url(message)
             
             if image_url:
-                print(f"[AUTO-PREDICT] Found image URL: {image_url[:100]}...")
                 try:
                     name, confidence = await self.predictor.predict(image_url, self.http_session)
                     
                     if name and confidence:
-                        print(f"[AUTO-PREDICT] Predicted: {name} ({confidence})")
                         formatted_output = format_pokemon_prediction(name, confidence)
                         
                         # Get all ping information concurrently
@@ -295,19 +286,11 @@ class Prediction(commands.Cog):
                             formatted_output += f"\n{ping_info}"
                         
                         await message.reply(formatted_output)
-                        print(f"[AUTO-PREDICT] Sent reply successfully")
-                    else:
-                        print(f"[AUTO-PREDICT] Prediction returned None")
                 
                 except Exception as e:
                     print(f"[AUTO-PREDICT] Error: {e}")
                     import traceback
                     traceback.print_exc()
-            else:
-                print(f"[AUTO-PREDICT] No image found in message")
-                print(f"[AUTO-PREDICT] Message content: {message.content[:100]}")
-                print(f"[AUTO-PREDICT] Attachments: {len(message.attachments)}")
-                print(f"[AUTO-PREDICT] Embeds: {len(message.embeds)}")
         
         # Auto-detect Poketwo spawns in OTHER channels (not auto-predict channel)
         elif message.author.id == POKETWO_USER_ID:
