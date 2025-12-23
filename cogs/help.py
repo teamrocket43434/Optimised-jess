@@ -20,7 +20,7 @@ class Help(commands.Cog):
         if not category:
             # Main help embed
             embed = discord.Embed(
-                title="📚 Pokemon Helper Bot - Help",
+                title="📚 Poketwo Helper Bot - Help",
                 description=f"Use `{prefix}help <category>` for detailed information about a category\nUse `{prefix}help all` to see all commands at once",
                 color=EMBED_COLOR
             )
