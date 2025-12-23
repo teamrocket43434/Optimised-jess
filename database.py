@@ -53,19 +53,15 @@ class Database:
             await self.db.shiny_hunts.create_index([("user_id", 1), ("guild_id", 1)])
             await self.db.shiny_hunts.create_index("pokemon")
 
-            # AFK users
-            await self.db.collection_afk_users.create_index([("user_id", 1), ("guild_id", 1)])
-            await self.db.shiny_hunt_afk_users.create_index([("user_id", 1), ("guild_id", 1)])
+            # Global AFK users (user_id only, no guild_id)
+            await self.db.collection_afk_users.create_index("user_id", unique=True)
+            await self.db.shiny_hunt_afk_users.create_index("user_id", unique=True)
 
             # Rare pings
             await self.db.rare_pings.create_index([("user_id", 1), ("guild_id", 1)])
 
-            # Guild settings - unique index on guild_id
+            # Guild settings
             await self.db.guild_settings.create_index("guild_id", unique=True)
-
-            # Global settings - NO index needed, _id is already unique by default
-            # MongoDB automatically creates a unique index on _id field
-            # So we don't need to create any additional indexes here
 
             print("✅ Database indexes created")
         except Exception as e:
@@ -169,73 +165,61 @@ class Database:
 
         return hunters
 
-    # AFK operations
-    async def get_collection_afk_users(self, guild_id: int) -> List[int]:
-        """Get list of collection AFK users"""
+    # Global AFK operations
+    async def get_collection_afk_users(self) -> List[int]:
+        """Get list of global collection AFK users"""
         afk_docs = await self.db.collection_afk_users.find(
-            {"guild_id": guild_id, "afk": True},
+            {"afk": True},
             {"user_id": 1}
         ).to_list(length=None)
         return [doc['user_id'] for doc in afk_docs]
 
-    async def get_shiny_hunt_afk_users(self, guild_id: int) -> List[int]:
-        """Get list of shiny hunt AFK users"""
+    async def get_shiny_hunt_afk_users(self) -> List[int]:
+        """Get list of global shiny hunt AFK users"""
         afk_docs = await self.db.shiny_hunt_afk_users.find(
-            {"guild_id": guild_id, "afk": True},
+            {"afk": True},
             {"user_id": 1}
         ).to_list(length=None)
         return [doc['user_id'] for doc in afk_docs]
 
-    async def toggle_collection_afk(self, user_id: int, guild_id: int) -> bool:
-        """Toggle collection AFK status. Returns new state"""
-        current = await self.db.collection_afk_users.find_one(
-            {"user_id": user_id, "guild_id": guild_id}
-        )
+    async def toggle_collection_afk(self, user_id: int) -> bool:
+        """Toggle global collection AFK status. Returns new state"""
+        current = await self.db.collection_afk_users.find_one({"user_id": user_id})
 
         if current and current.get('afk'):
-            await self.db.collection_afk_users.delete_one(
-                {"user_id": user_id, "guild_id": guild_id}
-            )
+            await self.db.collection_afk_users.delete_one({"user_id": user_id})
             return False
         else:
             await self.db.collection_afk_users.update_one(
-                {"user_id": user_id, "guild_id": guild_id},
+                {"user_id": user_id},
                 {"$set": {"afk": True}},
                 upsert=True
             )
             return True
 
-    async def toggle_shiny_hunt_afk(self, user_id: int, guild_id: int) -> bool:
-        """Toggle shiny hunt AFK status. Returns new state"""
-        current = await self.db.shiny_hunt_afk_users.find_one(
-            {"user_id": user_id, "guild_id": guild_id}
-        )
+    async def toggle_shiny_hunt_afk(self, user_id: int) -> bool:
+        """Toggle global shiny hunt AFK status. Returns new state"""
+        current = await self.db.shiny_hunt_afk_users.find_one({"user_id": user_id})
 
         if current and current.get('afk'):
-            await self.db.shiny_hunt_afk_users.delete_one(
-                {"user_id": user_id, "guild_id": guild_id}
-            )
+            await self.db.shiny_hunt_afk_users.delete_one({"user_id": user_id})
             return False
         else:
             await self.db.shiny_hunt_afk_users.update_one(
-                {"user_id": user_id, "guild_id": guild_id},
+                {"user_id": user_id},
                 {"$set": {"afk": True}},
                 upsert=True
             )
             return True
 
-    async def is_collection_afk(self, user_id: int, guild_id: int) -> bool:
-        """Check if user is collection AFK"""
-        afk_doc = await self.db.collection_afk_users.find_one(
-            {"user_id": user_id, "guild_id": guild_id}
-        )
+    async def is_collection_afk(self, user_id: int) -> bool:
+        """Check if user is globally collection AFK"""
+        afk_doc = await self.db.collection_afk_users.find_one({"user_id": user_id})
         return afk_doc and afk_doc.get('afk', False)
 
-    async def is_shiny_hunt_afk(self, user_id: int, guild_id: int) -> bool:
-        """Check if user is shiny hunt AFK"""
-        afk_doc = await self.db.shiny_hunt_afk_users.find_one(
-            {"user_id": user_id, "guild_id": guild_id}
-        )
+    async def is_shiny_hunt_afk(self, user_id: int) -> bool:
+        """Check if user is globally shiny hunt AFK"""
+        afk_doc = await self.db.shiny_hunt_afk_users.find_one({"user_id": user_id})
         return afk_doc and afk_doc.get('afk', False)
 
     # Rare pings
@@ -262,21 +246,35 @@ class Database:
         settings = await self.db.guild_settings.find_one({"guild_id": guild_id})
         return settings or {}
 
-    async def set_rare_role(self, guild_id: int, role_id: int):
-        """Set rare ping role"""
-        await self.db.guild_settings.update_one(
-            {"guild_id": guild_id},
-            {"$set": {"rare_role_id": role_id}},
-            upsert=True
-        )
+    async def set_rare_role(self, guild_id: int, role_id: Optional[int]):
+        """Set or clear rare ping role"""
+        if role_id is None:
+            await self.db.guild_settings.update_one(
+                {"guild_id": guild_id},
+                {"$unset": {"rare_role_id": ""}},
+                upsert=True
+            )
+        else:
+            await self.db.guild_settings.update_one(
+                {"guild_id": guild_id},
+                {"$set": {"rare_role_id": role_id}},
+                upsert=True
+            )
 
-    async def set_regional_role(self, guild_id: int, role_id: int):
-        """Set regional ping role"""
-        await self.db.guild_settings.update_one(
-            {"guild_id": guild_id},
-            {"$set": {"regional_role_id": role_id}},
-            upsert=True
-        )
+    async def set_regional_role(self, guild_id: int, role_id: Optional[int]):
+        """Set or clear regional ping role"""
+        if role_id is None:
+            await self.db.guild_settings.update_one(
+                {"guild_id": guild_id},
+                {"$unset": {"regional_role_id": ""}},
+                upsert=True
+            )
+        else:
+            await self.db.guild_settings.update_one(
+                {"guild_id": guild_id},
+                {"$set": {"regional_role_id": role_id}},
+                upsert=True
+            )
 
     async def set_low_prediction_channel(self, channel_id: int):
         """Set global low prediction channel"""
@@ -290,8 +288,6 @@ class Database:
         """Get global low prediction channel"""
         settings = await self.db.global_settings.find_one({"_id": "prediction"})
         return settings.get('low_prediction_channel_id') if settings else None
-
-    # Add to Database class in database.py
 
     # Starboard channel settings
     async def set_starboard_catch_channel(self, guild_id: int, channel_id: int):
