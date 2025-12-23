@@ -4,6 +4,7 @@ import os
 # Discord Configuration
 TOKEN = os.getenv("DISCORD_TOKEN")
 MONGODB_URI = os.getenv("MONGODB_URI")
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")  # Optional: for private model repos
 BOT_PREFIX = ['m!', 'M!']
 POKETWO_USER_ID = 716390085896962058
 
@@ -44,3 +45,6 @@ DB_MIN_POOL_SIZE = 1
 # File Paths
 POKEMON_DATA_PATH = "data/pokemondata.json"
 STARBOARD_DATA_PATH = "data/starboard.txt"
+
+# Model Configuration (for predict.py)
+MODEL_CACHE_DIR = "model_cache"
