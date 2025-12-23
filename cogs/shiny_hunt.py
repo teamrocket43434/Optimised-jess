@@ -145,7 +145,7 @@ class ShinyHunt(commands.Cog):
                                 f"To hunt all variants, use:\n"
                                 f"`m!sh {base_name} all`\n\n"
                                 f"Or specify the exact variants you want:\n"
-                                f"`m!sh Alolan {base_name}, Galarian {base_name}`",
+                                f"`m!sh Alolan {base_name}, Galarian {base_name}` <- just an example",
                     color=0xFFA500  # Orange color for warning
                 )
                 await ctx.reply(embed=embed, mention_author=False)
