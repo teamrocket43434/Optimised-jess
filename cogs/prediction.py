@@ -117,7 +117,6 @@ class Prediction(commands.Cog):
 
         return formatted_hunters
 
-
     async def get_collectors_for_spawn(self, pokemon_name: str, guild_id: int) -> list:
         """Get all collectors for a Pokemon spawn
 
@@ -184,6 +183,12 @@ class Prediction(commands.Cog):
 
             return formatted_output
 
+        except ValueError as e:
+            error_msg = str(e)
+            if "404" in error_msg or "Failed to load image" in error_msg:
+                return "Image not accessible (likely expired or deleted)."
+            print(f"Prediction error: {e}")
+            return f"Error: {str(e)[:100]}"
         except Exception as e:
             print(f"Prediction error: {e}")
             return f"Error: {str(e)[:100]}"
@@ -267,6 +272,15 @@ class Prediction(commands.Cog):
                             formatted_output += f"\n{ping_info}"
 
                         await message.reply(formatted_output)
+
+                except ValueError as e:
+                    # Handle image loading errors (404, expired URLs, etc.)
+                    error_msg = str(e)
+                    if "404" in error_msg or "Failed to load image" in error_msg:
+                        print(f"[AUTO-PREDICT] Image not accessible (likely expired/deleted): {image_url[:100]}")
+                        # Silently skip - don't notify user as this is expected for expired Discord URLs
+                    else:
+                        print(f"[AUTO-PREDICT] ValueError: {e}")
 
                 except Exception as e:
                     print(f"[AUTO-PREDICT] Error: {e}")
@@ -357,6 +371,15 @@ class Prediction(commands.Cog):
 
                                     except ValueError:
                                         print(f"Could not parse confidence value: {confidence}")
+
+                            except ValueError as e:
+                                # Handle image loading errors (404, expired URLs, etc.)
+                                error_msg = str(e)
+                                if "404" in error_msg or "Failed to load image" in error_msg:
+                                    print(f"[POKETWO-SPAWN] Image not accessible: {image_url[:100]}")
+                                    # Don't reply to Poketwo spawn if image fails - it might retry
+                                else:
+                                    print(f"[POKETWO-SPAWN] ValueError: {e}")
 
                             except Exception as e:
                                 print(f"Auto-detection error: {e}")
