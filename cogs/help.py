@@ -276,6 +276,14 @@ class Help(commands.Cog):
                 value="",
                 inline=False
             )
+
+            embed.add_field(
+                name="Starboard For All",
+                value=(
+                    f"`{prefix}starboard-all #channel` - All catches, Hatches, Unboxes\n"
+                ),
+                inline=False
+            )
             
             embed.add_field(
                 name="General Channels",
