@@ -1,6 +1,20 @@
 [
   {
-    "dex_number": 1,
+    "dex_number": 0,
+    "name": "MissingNo.",
+    "other_names": {
+      "🇯🇵": [
+        "Missingno",
+        "Missingno"
+      ],
+      "🇬🇧": "MissingNo",
+      "🇩🇪": "Missingno",
+      "🇫🇷": "Missingno"
+    },
+    "is_variant": false
+  },
+  {
+  "dex_number": 1,
     "name": "Bulbasaur",
     "other_names": {
       "🇯🇵": [
@@ -41,30 +55,6 @@
       "🇫🇷": "Florizarre"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 3,
-    "name": "Mega Venusaur",
-    "other_names": {
-      "🇯🇵": [
-        "メガフシギバナ",
-        "Megafushigibana"
-      ],
-      "🇬🇧": "Mega Venusaur",
-      "🇩🇪": "Mega-Bisaflor",
-      "🇫🇷": "Méga-Florizarre"
-    },
-    "is_variant": true,
-    "variant_of": "Venusaur"
-  },
-  {
-    "dex_number": 3,
-    "name": "Gigantamax Venusaur",
-    "other_names": {
-      "🇬🇧": "Gigantamax Venusaur"
-    },
-    "is_variant": true,
-    "variant_of": "Venusaur"
   },
   {
     "dex_number": 4,
@@ -111,45 +101,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 6,
-    "name": "Mega Charizard X",
-    "other_names": {
-      "🇯🇵": [
-        "メガリザードンＸ",
-        "Megarizādonx"
-      ],
-      "🇬🇧": "Mega Charizard X",
-      "🇩🇪": "Mega-Glurak X",
-      "🇫🇷": "Méga-Dracaufeu X"
-    },
-    "is_variant": true,
-    "variant_of": "Charizard"
-  },
-  {
-    "dex_number": 6,
-    "name": "Mega Charizard Y",
-    "other_names": {
-      "🇯🇵": [
-        "メガリザードンＹ",
-        "Megarizādony"
-      ],
-      "🇬🇧": "Mega Charizard Y",
-      "🇩🇪": "Mega-Glurak Y",
-      "🇫🇷": "Méga-Dracaufeu Y"
-    },
-    "is_variant": true,
-    "variant_of": "Charizard"
-  },
-  {
-    "dex_number": 6,
-    "name": "Gigantamax Charizard",
-    "other_names": {
-      "🇬🇧": "Gigantamax Charizard"
-    },
-    "is_variant": true,
-    "variant_of": "Charizard"
-  },
-  {
     "dex_number": 7,
     "name": "Squirtle",
     "other_names": {
@@ -192,30 +143,6 @@
       "🇫🇷": "Tortank"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 9,
-    "name": "Mega Blastoise",
-    "other_names": {
-      "🇯🇵": [
-        "メガカメックス",
-        "Megakamekkusu"
-      ],
-      "🇬🇧": "Mega Blastoise",
-      "🇩🇪": "Mega-Turtok",
-      "🇫🇷": "Méga-Tortank"
-    },
-    "is_variant": true,
-    "variant_of": "Blastoise"
-  },
-  {
-    "dex_number": 9,
-    "name": "Gigantamax Blastoise",
-    "other_names": {
-      "🇬🇧": "Gigantamax Blastoise"
-    },
-    "is_variant": true,
-    "variant_of": "Blastoise"
   },
   {
     "dex_number": 10,
@@ -263,15 +190,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 12,
-    "name": "Gigantamax Butterfree",
-    "other_names": {
-      "🇬🇧": "Gigantamax Butterfree"
-    },
-    "is_variant": true,
-    "variant_of": "Butterfree"
-  },
-  {
     "dex_number": 13,
     "name": "Weedle",
     "other_names": {
@@ -317,21 +235,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 15,
-    "name": "Mega Beedrill",
-    "other_names": {
-      "🇯🇵": [
-        "メガスピアー",
-        "Megasupiā"
-      ],
-      "🇬🇧": "Mega Beedrill",
-      "🇩🇪": "Mega-Bibor",
-      "🇫🇷": "Méga-Dardargnan"
-    },
-    "is_variant": true,
-    "variant_of": "Beedrill"
-  },
-  {
     "dex_number": 16,
     "name": "Pidgey",
     "other_names": {
@@ -374,21 +277,6 @@
       "🇫🇷": "Roucarnage"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 18,
-    "name": "Mega Pidgeot",
-    "other_names": {
-      "🇯🇵": [
-        "メガピジョット",
-        "Megapijotto"
-      ],
-      "🇬🇧": "Mega Pidgeot",
-      "🇩🇪": "Mega-Tauboss",
-      "🇫🇷": "Méga-Roucarnage"
-    },
-    "is_variant": true,
-    "variant_of": "Pidgeot"
   },
   {
     "dex_number": 19,
@@ -690,15 +578,6 @@
     "is_variant": true,
     "variant_of": "Pikachu",
     "rarity": "event"
-  },
-  {
-    "dex_number": 25,
-    "name": "Gigantamax Pikachu",
-    "other_names": {
-      "🇬🇧": "Gigantamax Pikachu"
-    },
-    "is_variant": true,
-    "variant_of": "Pikachu"
   },
   {
     "dex_number": 25,
@@ -1247,15 +1126,6 @@
     "rarity": "regional"
   },
   {
-    "dex_number": 52,
-    "name": "Gigantamax Meowth",
-    "other_names": {
-      "🇬🇧": "Gigantamax Meowth"
-    },
-    "is_variant": true,
-    "variant_of": "Meowth"
-  },
-  {
     "dex_number": 53,
     "name": "Persian",
     "other_names": {
@@ -1483,21 +1353,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 65,
-    "name": "Mega Alakazam",
-    "other_names": {
-      "🇯🇵": [
-        "メガフーディン",
-        "Megafūdin"
-      ],
-      "🇬🇧": "Mega Alakazam",
-      "🇩🇪": "Mega-Simsala",
-      "🇫🇷": "Méga-Alakazam"
-    },
-    "is_variant": true,
-    "variant_of": "Alakazam"
-  },
-  {
     "dex_number": 66,
     "name": "Machop",
     "other_names": {
@@ -1541,15 +1396,6 @@
       "🇫🇷": "Mackogneur"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 68,
-    "name": "Gigantamax Machamp",
-    "other_names": {
-      "🇬🇧": "Gigantamax Machamp"
-    },
-    "is_variant": true,
-    "variant_of": "Machamp"
   },
   {
     "dex_number": 69,
@@ -1802,21 +1648,6 @@
       "🇫🇷": "Flagadoss"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 80,
-    "name": "Mega Slowbro",
-    "other_names": {
-      "🇯🇵": [
-        "メガヤドラン",
-        "Megayadoran"
-      ],
-      "🇬🇧": "Mega Slowbro",
-      "🇩🇪": "Mega-Lahmus",
-      "🇫🇷": "Méga-Flagadoss"
-    },
-    "is_variant": true,
-    "variant_of": "Slowbro"
   },
   {
     "dex_number": 80,
@@ -2079,30 +1910,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 94,
-    "name": "Mega Gengar",
-    "other_names": {
-      "🇯🇵": [
-        "メガゲンガー",
-        "Megagengā"
-      ],
-      "🇬🇧": "Mega Gengar",
-      "🇩🇪": "Mega-Gengar",
-      "🇫🇷": "Méga-Ectoplasma"
-    },
-    "is_variant": true,
-    "variant_of": "Gengar"
-  },
-  {
-    "dex_number": 94,
-    "name": "Gigantamax Gengar",
-    "other_names": {
-      "🇬🇧": "Gigantamax Gengar"
-    },
-    "is_variant": true,
-    "variant_of": "Gengar"
-  },
-  {
     "dex_number": 95,
     "name": "Onix",
     "other_names": {
@@ -2176,15 +1983,6 @@
       "🇫🇷": "Krabboss"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 99,
-    "name": "Gigantamax Kingler",
-    "other_names": {
-      "🇬🇧": "Gigantamax Kingler"
-    },
-    "is_variant": true,
-    "variant_of": "Kingler"
   },
   {
     "dex_number": 100,
@@ -2483,21 +2281,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 115,
-    "name": "Mega Kangaskhan",
-    "other_names": {
-      "🇯🇵": [
-        "メガガルーラ",
-        "Megagarūra"
-      ],
-      "🇬🇧": "Mega Kangaskhan",
-      "🇩🇪": "Mega-Kangama",
-      "🇫🇷": "Méga-Kangourex"
-    },
-    "is_variant": true,
-    "variant_of": "Kangaskhan"
-  },
-  {
     "dex_number": 116,
     "name": "Horsea",
     "other_names": {
@@ -2686,21 +2469,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 127,
-    "name": "Mega Pinsir",
-    "other_names": {
-      "🇯🇵": [
-        "メガカイロス",
-        "Megakairosu"
-      ],
-      "🇬🇧": "Mega Pinsir",
-      "🇩🇪": "Mega-Pinsir",
-      "🇫🇷": "Méga-Scarabrute"
-    },
-    "is_variant": true,
-    "variant_of": "Pinsir"
-  },
-  {
     "dex_number": 128,
     "name": "Tauros",
     "other_names": {
@@ -2785,21 +2553,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 130,
-    "name": "Mega Gyarados",
-    "other_names": {
-      "🇯🇵": [
-        "メガギャラドス",
-        "Megagyaradosu"
-      ],
-      "🇬🇧": "Mega Gyarados",
-      "🇩🇪": "Mega-Garados",
-      "🇫🇷": "Méga-Léviator"
-    },
-    "is_variant": true,
-    "variant_of": "Gyarados"
-  },
-  {
     "dex_number": 131,
     "name": "Lapras",
     "other_names": {
@@ -2813,15 +2566,6 @@
       "🇫🇷": "Lokhlass"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 131,
-    "name": "Gigantamax Lapras",
-    "other_names": {
-      "🇬🇧": "Gigantamax Lapras"
-    },
-    "is_variant": true,
-    "variant_of": "Lapras"
   },
   {
     "dex_number": 132,
@@ -2851,15 +2595,6 @@
       "🇫🇷": "Évoli"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 133,
-    "name": "Gigantamax Eevee",
-    "other_names": {
-      "🇬🇧": "Gigantamax Eevee"
-    },
-    "is_variant": true,
-    "variant_of": "Eevee"
   },
   {
     "dex_number": 133,
@@ -3007,21 +2742,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 142,
-    "name": "Mega Aerodactyl",
-    "other_names": {
-      "🇯🇵": [
-        "メガプテラ",
-        "Megaputera"
-      ],
-      "🇬🇧": "Mega Aerodactyl",
-      "🇩🇪": "Mega-Aerodactyl",
-      "🇫🇷": "Méga-Ptéra"
-    },
-    "is_variant": true,
-    "variant_of": "Aerodactyl"
-  },
-  {
     "dex_number": 143,
     "name": "Snorlax",
     "other_names": {
@@ -3034,15 +2754,6 @@
       "🇫🇷": "Ronflex"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 143,
-    "name": "Gigantamax Snorlax",
-    "other_names": {
-      "🇬🇧": "Gigantamax Snorlax"
-    },
-    "is_variant": true,
-    "variant_of": "Snorlax"
   },
   {
     "dex_number": 144,
@@ -3181,38 +2892,6 @@
       "🇫🇷": "Mewtwo"
     },
     "is_variant": false,
-    "rarity": "legendary"
-  },
-  {
-    "dex_number": 150,
-    "name": "Mega Mewtwo X",
-    "other_names": {
-      "🇯🇵": [
-        "メガミュウツーＸ",
-        "Megamyūtsūx"
-      ],
-      "🇬🇧": "Mega Mewtwo X",
-      "🇩🇪": "Mega-Mewtu X",
-      "🇫🇷": "Méga-Mewtwo X"
-    },
-    "is_variant": true,
-    "variant_of": "Mewtwo",
-    "rarity": "legendary"
-  },
-  {
-    "dex_number": 150,
-    "name": "Mega Mewtwo Y",
-    "other_names": {
-      "🇯🇵": [
-        "メガミュウツーＹ",
-        "Megamyūtsūy"
-      ],
-      "🇬🇧": "Mega Mewtwo Y",
-      "🇩🇪": "Mega-Mewtu Y",
-      "🇫🇷": "Méga-Mewtwo Y"
-    },
-    "is_variant": true,
-    "variant_of": "Mewtwo",
     "rarity": "legendary"
   },
   {
@@ -3693,21 +3372,6 @@
       "🇫🇷": "Pharamp"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 181,
-    "name": "Mega Ampharos",
-    "other_names": {
-      "🇯🇵": [
-        "メガデンリュウ",
-        "Megadenryū"
-      ],
-      "🇬🇧": "Mega Ampharos",
-      "🇩🇪": "Mega-Ampharos",
-      "🇫🇷": "Méga-Pharamp"
-    },
-    "is_variant": true,
-    "variant_of": "Ampharos"
   },
   {
     "dex_number": 182,
@@ -4429,21 +4093,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 208,
-    "name": "Mega Steelix",
-    "other_names": {
-      "🇯🇵": [
-        "メガハガネール",
-        "Megahaganēru"
-      ],
-      "🇬🇧": "Mega Steelix",
-      "🇩🇪": "Mega-Stahlos",
-      "🇫🇷": "Méga-Steelix"
-    },
-    "is_variant": true,
-    "variant_of": "Steelix"
-  },
-  {
     "dex_number": 209,
     "name": "Snubbull",
     "other_names": {
@@ -4514,21 +4163,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 212,
-    "name": "Mega Scizor",
-    "other_names": {
-      "🇯🇵": [
-        "メガハッサム",
-        "Megahassamu"
-      ],
-      "🇬🇧": "Mega Scizor",
-      "🇩🇪": "Mega-Scherox",
-      "🇫🇷": "Méga-Cizayox"
-    },
-    "is_variant": true,
-    "variant_of": "Scizor"
-  },
-  {
     "dex_number": 213,
     "name": "Shuckle",
     "other_names": {
@@ -4556,21 +4190,6 @@
       "🇫🇷": "Scarhino"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 214,
-    "name": "Mega Heracross",
-    "other_names": {
-      "🇯🇵": [
-        "メガヘラクロス",
-        "Megaherakurosu"
-      ],
-      "🇬🇧": "Mega Heracross",
-      "🇩🇪": "Mega-Skaraborn",
-      "🇫🇷": "Méga-Scarhino"
-    },
-    "is_variant": true,
-    "variant_of": "Heracross"
   },
   {
     "dex_number": 215,
@@ -4813,21 +4432,6 @@
       "🇫🇷": "Démolosse"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 229,
-    "name": "Mega Houndoom",
-    "other_names": {
-      "🇯🇵": [
-        "メガヘルガー",
-        "Megaherugā"
-      ],
-      "🇬🇧": "Mega Houndoom",
-      "🇩🇪": "Mega-Hundemon",
-      "🇫🇷": "Méga-Démolosse"
-    },
-    "is_variant": true,
-    "variant_of": "Houndoom"
   },
   {
     "dex_number": 230,
@@ -5115,21 +4719,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 248,
-    "name": "Mega Tyranitar",
-    "other_names": {
-      "🇯🇵": [
-        "メガバンギラス",
-        "Megabangirasu"
-      ],
-      "🇬🇧": "Mega Tyranitar",
-      "🇩🇪": "Mega-Despotar",
-      "🇫🇷": "Méga-Tyranocif"
-    },
-    "is_variant": true,
-    "variant_of": "Tyranitar"
-  },
-  {
     "dex_number": 249,
     "name": "Lugia",
     "other_names": {
@@ -5221,21 +4810,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 254,
-    "name": "Mega Sceptile",
-    "other_names": {
-      "🇯🇵": [
-        "メガジュカイン",
-        "Megajukain"
-      ],
-      "🇬🇧": "Mega Sceptile",
-      "🇩🇪": "Mega-Gewaldro",
-      "🇫🇷": "Méga-Jungko"
-    },
-    "is_variant": true,
-    "variant_of": "Sceptile"
-  },
-  {
     "dex_number": 255,
     "name": "Torchic",
     "other_names": {
@@ -5278,21 +4852,6 @@
       "🇫🇷": "Braségali"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 257,
-    "name": "Mega Blaziken",
-    "other_names": {
-      "🇯🇵": [
-        "メガバシャーモ",
-        "Megabashāmo"
-      ],
-      "🇬🇧": "Mega Blaziken",
-      "🇩🇪": "Mega-Lohgock",
-      "🇫🇷": "Méga-Braségali"
-    },
-    "is_variant": true,
-    "variant_of": "Blaziken"
   },
   {
     "dex_number": 258,
@@ -5338,21 +4897,6 @@
       "🇫🇷": "Laggron"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 260,
-    "name": "Mega Swampert",
-    "other_names": {
-      "🇯🇵": [
-        "メガラグラージ",
-        "Megaragurāji"
-      ],
-      "🇬🇧": "Mega Swampert",
-      "🇩🇪": "Mega-Sumpex",
-      "🇫🇷": "Méga-Laggron"
-    },
-    "is_variant": true,
-    "variant_of": "Swampert"
   },
   {
     "dex_number": 261,
@@ -5698,21 +5242,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 282,
-    "name": "Mega Gardevoir",
-    "other_names": {
-      "🇯🇵": [
-        "メガサーナイト",
-        "Megasānaito"
-      ],
-      "🇬🇧": "Mega Gardevoir",
-      "🇩🇪": "Mega-Guardevoir",
-      "🇫🇷": "Méga-Gardevoir"
-    },
-    "is_variant": true,
-    "variant_of": "Gardevoir"
-  },
-  {
     "dex_number": 283,
     "name": "Surskit",
     "other_names": {
@@ -6001,21 +5530,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 302,
-    "name": "Mega Sableye",
-    "other_names": {
-      "🇯🇵": [
-        "メガヤミラミ",
-        "Megayamirami"
-      ],
-      "🇬🇧": "Mega Sableye",
-      "🇩🇪": "Mega-Zobiris",
-      "🇫🇷": "Méga-Ténéfix"
-    },
-    "is_variant": true,
-    "variant_of": "Sableye"
-  },
-  {
     "dex_number": 303,
     "name": "Mawile",
     "other_names": {
@@ -6029,21 +5543,6 @@
       "🇫🇷": "Mysdibule"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 303,
-    "name": "Mega Mawile",
-    "other_names": {
-      "🇯🇵": [
-        "メガクチート",
-        "Megakuchīto"
-      ],
-      "🇬🇧": "Mega Mawile",
-      "🇩🇪": "Mega-Flunkifer",
-      "🇫🇷": "Méga-Mysdibule"
-    },
-    "is_variant": true,
-    "variant_of": "Mawile"
   },
   {
     "dex_number": 304,
@@ -6090,21 +5589,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 306,
-    "name": "Mega Aggron",
-    "other_names": {
-      "🇯🇵": [
-        "メガボスゴドラ",
-        "Megabosugodora"
-      ],
-      "🇬🇧": "Mega Aggron",
-      "🇩🇪": "Mega-Stolloss",
-      "🇫🇷": "Méga-Galeking"
-    },
-    "is_variant": true,
-    "variant_of": "Aggron"
-  },
-  {
     "dex_number": 307,
     "name": "Meditite",
     "other_names": {
@@ -6134,21 +5618,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 308,
-    "name": "Mega Medicham",
-    "other_names": {
-      "🇯🇵": [
-        "メガチャーレム",
-        "Megachāremu"
-      ],
-      "🇬🇧": "Mega Medicham",
-      "🇩🇪": "Mega-Meditalis",
-      "🇫🇷": "Méga-Charmina"
-    },
-    "is_variant": true,
-    "variant_of": "Medicham"
-  },
-  {
     "dex_number": 309,
     "name": "Electrike",
     "other_names": {
@@ -6176,21 +5645,6 @@
       "🇫🇷": "Élecsprint"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 310,
-    "name": "Mega Manectric",
-    "other_names": {
-      "🇯🇵": [
-        "メガライボルト",
-        "Megaraiboruto"
-      ],
-      "🇬🇧": "Mega Manectric",
-      "🇩🇪": "Mega-Voltenso",
-      "🇫🇷": "Méga-Élecsprint"
-    },
-    "is_variant": true,
-    "variant_of": "Manectric"
   },
   {
     "dex_number": 311,
@@ -6328,21 +5782,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 319,
-    "name": "Mega Sharpedo",
-    "other_names": {
-      "🇯🇵": [
-        "メガサメハダー",
-        "Megasamehadā"
-      ],
-      "🇬🇧": "Mega Sharpedo",
-      "🇩🇪": "Mega-Tohaido",
-      "🇫🇷": "Méga-Sharpedo"
-    },
-    "is_variant": true,
-    "variant_of": "Sharpedo"
-  },
-  {
     "dex_number": 320,
     "name": "Wailmer",
     "other_names": {
@@ -6400,21 +5839,6 @@
       "🇫🇷": "Camérupt"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 323,
-    "name": "Mega Camerupt",
-    "other_names": {
-      "🇯🇵": [
-        "メガバクーダ",
-        "Megabakūda"
-      ],
-      "🇬🇧": "Mega Camerupt",
-      "🇩🇪": "Mega-Camerupt",
-      "🇫🇷": "Méga-Camérupt"
-    },
-    "is_variant": true,
-    "variant_of": "Camerupt"
   },
   {
     "dex_number": 324,
@@ -6579,21 +6003,6 @@
       "🇫🇷": "Altaria"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 334,
-    "name": "Mega Altaria",
-    "other_names": {
-      "🇯🇵": [
-        "メガチルタリス",
-        "Megachirutarisu"
-      ],
-      "🇬🇧": "Mega Altaria",
-      "🇩🇪": "Mega-Altaria",
-      "🇫🇷": "Méga-Altaria"
-    },
-    "is_variant": true,
-    "variant_of": "Altaria"
   },
   {
     "dex_number": 335,
@@ -6938,21 +6347,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 354,
-    "name": "Mega Banette",
-    "other_names": {
-      "🇯🇵": [
-        "メガジュペッタ",
-        "Megajupetta"
-      ],
-      "🇬🇧": "Mega Banette",
-      "🇩🇪": "Mega-Banette",
-      "🇫🇷": "Méga-Branette"
-    },
-    "is_variant": true,
-    "variant_of": "Banette"
-  },
-  {
     "dex_number": 355,
     "name": "Duskull",
     "other_names": {
@@ -7027,21 +6421,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 359,
-    "name": "Mega Absol",
-    "other_names": {
-      "🇯🇵": [
-        "メガアブソル",
-        "Megābusoru"
-      ],
-      "🇬🇧": "Mega Absol",
-      "🇩🇪": "Mega-Absol",
-      "🇫🇷": "Méga-Absol"
-    },
-    "is_variant": true,
-    "variant_of": "Absol"
-  },
-  {
     "dex_number": 360,
     "name": "Wynaut",
     "other_names": {
@@ -7084,21 +6463,6 @@
       "🇫🇷": "Oniglali"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 362,
-    "name": "Mega Glalie",
-    "other_names": {
-      "🇯🇵": [
-        "メガオニゴーリ",
-        "Megaonigōri"
-      ],
-      "🇬🇧": "Mega Glalie",
-      "🇩🇪": "Mega-Firnontor",
-      "🇫🇷": "Méga-Oniglali"
-    },
-    "is_variant": true,
-    "variant_of": "Glalie"
   },
   {
     "dex_number": 363,
@@ -7265,21 +6629,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 373,
-    "name": "Mega Salamence",
-    "other_names": {
-      "🇯🇵": [
-        "メガボーマンダ",
-        "Megabōmanda"
-      ],
-      "🇬🇧": "Mega Salamence",
-      "🇩🇪": "Mega-Brutalanda",
-      "🇫🇷": "Méga-Drattak"
-    },
-    "is_variant": true,
-    "variant_of": "Salamence"
-  },
-  {
     "dex_number": 374,
     "name": "Beldum",
     "other_names": {
@@ -7323,21 +6672,6 @@
       "🇫🇷": "Métalosse"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 376,
-    "name": "Mega Metagross",
-    "other_names": {
-      "🇯🇵": [
-        "メガメタグロス",
-        "Megametagurosu"
-      ],
-      "🇬🇧": "Mega Metagross",
-      "🇩🇪": "Mega-Metagross",
-      "🇫🇷": "Méga-Métalosse"
-    },
-    "is_variant": true,
-    "variant_of": "Metagross"
   },
   {
     "dex_number": 377,
@@ -7404,22 +6738,6 @@
     "rarity": "legendary"
   },
   {
-    "dex_number": 380,
-    "name": "Mega Latias",
-    "other_names": {
-      "🇯🇵": [
-        "メガラティアス",
-        "Megaratiasu"
-      ],
-      "🇬🇧": "Mega Latias",
-      "🇩🇪": "Mega-Latias",
-      "🇫🇷": "Méga-Latias"
-    },
-    "is_variant": true,
-    "variant_of": "Latias",
-    "rarity": "legendary"
-  },
-  {
     "dex_number": 381,
     "name": "Latios",
     "other_names": {
@@ -7433,22 +6751,6 @@
       "🇫🇷": "Latios"
     },
     "is_variant": false,
-    "rarity": "legendary"
-  },
-  {
-    "dex_number": 381,
-    "name": "Mega Latios",
-    "other_names": {
-      "🇯🇵": [
-        "メガラティオス",
-        "Megaratiosu"
-      ],
-      "🇬🇧": "Mega Latios",
-      "🇩🇪": "Mega-Latios",
-      "🇫🇷": "Méga-Latios"
-    },
-    "is_variant": true,
-    "variant_of": "Latios",
     "rarity": "legendary"
   },
   {
@@ -7468,22 +6770,6 @@
     "rarity": "legendary"
   },
   {
-    "dex_number": 382,
-    "name": "Primal Kyogre",
-    "other_names": {
-      "🇯🇵": [
-        "ゲンシカイキのすがた",
-        "Genshikaikinosugata"
-      ],
-      "🇬🇧": "Primal Kyogre",
-      "🇩🇪": "Protomorphose",
-      "🇫🇷": "Primo-Résurgence"
-    },
-    "is_variant": true,
-    "variant_of": "Kyogre",
-    "rarity": "legendary"
-  },
-  {
     "dex_number": 383,
     "name": "Groudon",
     "other_names": {
@@ -7500,22 +6786,6 @@
     "rarity": "legendary"
   },
   {
-    "dex_number": 383,
-    "name": "Primal Groudon",
-    "other_names": {
-      "🇯🇵": [
-        "ゲンシカイキのすがた",
-        "Genshikaikinosugata"
-      ],
-      "🇬🇧": "Primal Groudon",
-      "🇩🇪": "Protomorphose",
-      "🇫🇷": "Primo-Résurgence"
-    },
-    "is_variant": true,
-    "variant_of": "Groudon",
-    "rarity": "legendary"
-  },
-  {
     "dex_number": 384,
     "name": "Rayquaza",
     "other_names": {
@@ -7529,22 +6799,6 @@
       "🇫🇷": "Rayquaza"
     },
     "is_variant": false,
-    "rarity": "legendary"
-  },
-  {
-    "dex_number": 384,
-    "name": "Mega Rayquaza",
-    "other_names": {
-      "🇯🇵": [
-        "メガレックウザ",
-        "Megarekkūza"
-      ],
-      "🇬🇧": "Mega Rayquaza",
-      "🇩🇪": "Mega-Rayquaza",
-      "🇫🇷": "Méga-Rayquaza"
-    },
-    "is_variant": true,
-    "variant_of": "Rayquaza",
     "rarity": "legendary"
   },
   {
@@ -8352,21 +7606,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 428,
-    "name": "Mega Lopunny",
-    "other_names": {
-      "🇯🇵": [
-        "メガミミロップ",
-        "Megamimiroppu"
-      ],
-      "🇬🇧": "Mega Lopunny",
-      "🇩🇪": "Mega-Schlapor",
-      "🇫🇷": "Méga-Lockpin"
-    },
-    "is_variant": true,
-    "variant_of": "Lopunny"
-  },
-  {
     "dex_number": 429,
     "name": "Mismagius",
     "other_names": {
@@ -8616,21 +7855,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 445,
-    "name": "Mega Garchomp",
-    "other_names": {
-      "🇯🇵": [
-        "メガガブリアス",
-        "Megagaburiasu"
-      ],
-      "🇬🇧": "Mega Garchomp",
-      "🇩🇪": "Mega-Knakrack",
-      "🇫🇷": "Méga-Carchacrok"
-    },
-    "is_variant": true,
-    "variant_of": "Garchomp"
-  },
-  {
     "dex_number": 446,
     "name": "Munchlax",
     "other_names": {
@@ -8673,21 +7897,6 @@
       "🇫🇷": "Lucario"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 448,
-    "name": "Mega Lucario",
-    "other_names": {
-      "🇯🇵": [
-        "メガルカリオ",
-        "Megarukario"
-      ],
-      "🇬🇧": "Mega Lucario",
-      "🇩🇪": "Mega-Lucario",
-      "🇫🇷": "Méga-Lucario"
-    },
-    "is_variant": true,
-    "variant_of": "Lucario"
   },
   {
     "dex_number": 449,
@@ -8865,21 +8074,6 @@
       "🇫🇷": "Blizzaroi"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 460,
-    "name": "Mega Abomasnow",
-    "other_names": {
-      "🇯🇵": [
-        "メガユキノオー",
-        "Megayukinōō"
-      ],
-      "🇬🇧": "Mega Abomasnow",
-      "🇩🇪": "Mega-Rexblisar",
-      "🇫🇷": "Méga-Blizzaroi"
-    },
-    "is_variant": true,
-    "variant_of": "Abomasnow"
   },
   {
     "dex_number": 461,
@@ -9103,21 +8297,6 @@
       "🇫🇷": "Gallame"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 475,
-    "name": "Mega Gallade",
-    "other_names": {
-      "🇯🇵": [
-        "メガエルレイド",
-        "Megaerureido"
-      ],
-      "🇬🇧": "Mega Gallade",
-      "🇩🇪": "Mega-Galagladi",
-      "🇫🇷": "Méga-Gallame"
-    },
-    "is_variant": true,
-    "variant_of": "Gallade"
   },
   {
     "dex_number": 476,
@@ -9348,16 +8527,6 @@
     "rarity": "legendary"
   },
   {
-    "dex_number": 483,
-    "name": "Origin Dialga",
-    "other_names": {
-      "🇬🇧": "Origin Dialga"
-    },
-    "is_variant": true,
-    "variant_of": "Dialga",
-    "rarity": "legendary"
-  },
-  {
     "dex_number": 484,
     "name": "Palkia",
     "other_names": {
@@ -9371,16 +8540,6 @@
       "🇫🇷": "Palkia"
     },
     "is_variant": false,
-    "rarity": "legendary"
-  },
-  {
-    "dex_number": 484,
-    "name": "Origin Palkia",
-    "other_names": {
-      "🇬🇧": "Origin Palkia"
-    },
-    "is_variant": true,
-    "variant_of": "Palkia",
     "rarity": "legendary"
   },
   {
@@ -9428,22 +8587,6 @@
       "🇫🇷": "Giratina"
     },
     "is_variant": false,
-    "rarity": "legendary"
-  },
-  {
-    "dex_number": 487,
-    "name": "Origin Giratina",
-    "other_names": {
-      "🇯🇵": [
-        "オリジンフォルム",
-        "Orijinforumu"
-      ],
-      "🇬🇧": "Origin Giratina",
-      "🇩🇪": "Urform",
-      "🇫🇷": "Forme Originelle"
-    },
-    "is_variant": true,
-    "variant_of": "Giratina",
     "rarity": "legendary"
   },
   {
@@ -9524,22 +8667,6 @@
       "🇫🇷": "Shaymin"
     },
     "is_variant": false,
-    "rarity": "mythical"
-  },
-  {
-    "dex_number": 492,
-    "name": "Sky Shaymin",
-    "other_names": {
-      "🇯🇵": [
-        "スカイフォルム",
-        "Sukaiforumu"
-      ],
-      "🇬🇧": "Sky Shaymin",
-      "🇩🇪": "Zenitform",
-      "🇫🇷": "Forme Céleste"
-    },
-    "is_variant": true,
-    "variant_of": "Shaymin",
     "rarity": "mythical"
   },
   {
@@ -10297,21 +9424,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 531,
-    "name": "Mega Audino",
-    "other_names": {
-      "🇯🇵": [
-        "メガタブンネ",
-        "Megatabunne"
-      ],
-      "🇬🇧": "Mega Audino",
-      "🇩🇪": "Mega-Ohrdoch",
-      "🇫🇷": "Méga-Nanméouïe"
-    },
-    "is_variant": true,
-    "variant_of": "Audino"
-  },
-  {
     "dex_number": 532,
     "name": "Timburr",
     "other_names": {
@@ -10953,15 +10065,6 @@
       "🇫🇷": "Miasmax"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 569,
-    "name": "Gigantamax Garbodor",
-    "other_names": {
-      "🇬🇧": "Gigantamax Garbodor"
-    },
-    "is_variant": true,
-    "variant_of": "Garbodor"
   },
   {
     "dex_number": 570,
@@ -12124,22 +11227,6 @@
     "rarity": "legendary"
   },
   {
-    "dex_number": 641,
-    "name": "Therian Tornadus",
-    "other_names": {
-      "🇯🇵": [
-        "れいじゅうフォルム",
-        "Reijūforumu"
-      ],
-      "🇬🇧": "Therian Tornadus",
-      "🇩🇪": "Tiergeistform",
-      "🇫🇷": "Forme Totémique"
-    },
-    "is_variant": true,
-    "variant_of": "Tornadus",
-    "rarity": "legendary"
-  },
-  {
     "dex_number": 642,
     "name": "Thundurus",
     "other_names": {
@@ -12153,22 +11240,6 @@
       "🇫🇷": "Fulguris"
     },
     "is_variant": false,
-    "rarity": "legendary"
-  },
-  {
-    "dex_number": 642,
-    "name": "Therian Thundurus",
-    "other_names": {
-      "🇯🇵": [
-        "れいじゅうフォルム",
-        "Reijūforumu"
-      ],
-      "🇬🇧": "Therian Thundurus",
-      "🇩🇪": "Tiergeistform",
-      "🇫🇷": "Forme Totémique"
-    },
-    "is_variant": true,
-    "variant_of": "Thundurus",
     "rarity": "legendary"
   },
   {
@@ -12220,22 +11291,6 @@
     "rarity": "legendary"
   },
   {
-    "dex_number": 645,
-    "name": "Therian Landorus",
-    "other_names": {
-      "🇯🇵": [
-        "れいじゅうフォルム",
-        "Reijūforumu"
-      ],
-      "🇬🇧": "Therian Landorus",
-      "🇩🇪": "Tiergeistform",
-      "🇫🇷": "Forme Totémique"
-    },
-    "is_variant": true,
-    "variant_of": "Landorus",
-    "rarity": "legendary"
-  },
-  {
     "dex_number": 646,
     "name": "Kyurem",
     "other_names": {
@@ -12252,38 +11307,6 @@
     "rarity": "legendary"
   },
   {
-    "dex_number": 646,
-    "name": "Black Kyurem",
-    "other_names": {
-      "🇯🇵": [
-        "ブラックキュレム",
-        "Burakkukyuremu"
-      ],
-      "🇬🇧": "Black Kyurem",
-      "🇩🇪": "Schwarzes Kyurem",
-      "🇫🇷": "Kyurem Noir"
-    },
-    "is_variant": true,
-    "variant_of": "Kyurem",
-    "rarity": "legendary"
-  },
-  {
-    "dex_number": 646,
-    "name": "White Kyurem",
-    "other_names": {
-      "🇯🇵": [
-        "ホワイトキュレム",
-        "Howaitokyuremu"
-      ],
-      "🇬🇧": "White Kyurem",
-      "🇩🇪": "Weißes Kyurem",
-      "🇫🇷": "Kyurem Blanc"
-    },
-    "is_variant": true,
-    "variant_of": "Kyurem",
-    "rarity": "legendary"
-  },
-  {
     "dex_number": 647,
     "name": "Keldeo",
     "other_names": {
@@ -12297,22 +11320,6 @@
       "🇫🇷": "Keldeo"
     },
     "is_variant": false,
-    "rarity": "mythical"
-  },
-  {
-    "dex_number": 647,
-    "name": "Resolute Keldeo",
-    "other_names": {
-      "🇯🇵": [
-        "かくごのすがた",
-        "Kakugonosugata"
-      ],
-      "🇬🇧": "Resolute Keldeo",
-      "🇩🇪": "Resolutform",
-      "🇫🇷": "Aspect Décidé"
-    },
-    "is_variant": true,
-    "variant_of": "Keldeo",
     "rarity": "mythical"
   },
   {
@@ -14028,22 +13035,6 @@
     "rarity": "mythical"
   },
   {
-    "dex_number": 719,
-    "name": "Mega Diancie",
-    "other_names": {
-      "🇯🇵": [
-        "メガディアンシー",
-        "Megadianshī"
-      ],
-      "🇬🇧": "Mega Diancie",
-      "🇩🇪": "Mega-Diancie",
-      "🇫🇷": "Méga-Diancie"
-    },
-    "is_variant": true,
-    "variant_of": "Diancie",
-    "rarity": "mythical"
-  },
-  {
     "dex_number": 720,
     "name": "Hoopa",
     "other_names": {
@@ -14057,22 +13048,6 @@
       "🇫🇷": "Hoopa"
     },
     "is_variant": false,
-    "rarity": "mythical"
-  },
-  {
-    "dex_number": 720,
-    "name": "Hoopa Unbound",
-    "other_names": {
-      "🇯🇵": [
-        "ときはなたれしフーパ",
-        "Tokihanatareshifūpa"
-      ],
-      "🇬🇧": "Hoopa Unbound",
-      "🇩🇪": "Entfesseltes Hoopa",
-      "🇫🇷": "Hoopa Déchaîné"
-    },
-    "is_variant": true,
-    "variant_of": "Hoopa",
     "rarity": "mythical"
   },
   {
@@ -15142,160 +14117,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 774,
-    "name": "Red Meteor Minior",
-    "other_names": {
-      "🇬🇧": "Red Meteor Minior",
-      "🇩🇪": "Meteorform",
-      "🇫🇷": "Forme Météore"
-    },
-    "is_variant": true,
-    "variant_of": "Minior"
-  },
-  {
-    "dex_number": 774,
-    "name": "Orange Meteor Minior",
-    "other_names": {
-      "🇬🇧": "Orange Meteor Minior",
-      "🇩🇪": "Meteorform",
-      "🇫🇷": "Forme Météore"
-    },
-    "is_variant": true,
-    "variant_of": "Minior"
-  },
-  {
-    "dex_number": 774,
-    "name": "Yellow Meteor Minior",
-    "other_names": {
-      "🇬🇧": "Yellow Meteor Minior",
-      "🇩🇪": "Meteorform",
-      "🇫🇷": "Forme Météore"
-    },
-    "is_variant": true,
-    "variant_of": "Minior"
-  },
-  {
-    "dex_number": 774,
-    "name": "Green Meteor Minior",
-    "other_names": {
-      "🇬🇧": "Green Meteor Minior",
-      "🇩🇪": "Meteorform",
-      "🇫🇷": "Forme Météore"
-    },
-    "is_variant": true,
-    "variant_of": "Minior"
-  },
-  {
-    "dex_number": 774,
-    "name": "Blue Meteor Minior",
-    "other_names": {
-      "🇬🇧": "Blue Meteor Minior",
-      "🇩🇪": "Meteorform",
-      "🇫🇷": "Forme Météore"
-    },
-    "is_variant": true,
-    "variant_of": "Minior"
-  },
-  {
-    "dex_number": 774,
-    "name": "Indigo Meteor Minior",
-    "other_names": {
-      "🇬🇧": "Indigo Meteor Minior",
-      "🇩🇪": "Meteorform",
-      "🇫🇷": "Forme Météore"
-    },
-    "is_variant": true,
-    "variant_of": "Minior"
-  },
-  {
-    "dex_number": 774,
-    "name": "Violet Meteor Minior",
-    "other_names": {
-      "🇬🇧": "Violet Meteor Minior",
-      "🇩🇪": "Meteorform",
-      "🇫🇷": "Forme Météore"
-    },
-    "is_variant": true,
-    "variant_of": "Minior"
-  },
-  {
-    "dex_number": 774,
-    "name": "Red Core Minior",
-    "other_names": {
-      "🇬🇧": "Red Core Minior",
-      "🇩🇪": "Roter Kern",
-      "🇫🇷": "Noyau Rouge"
-    },
-    "is_variant": true,
-    "variant_of": "Minior"
-  },
-  {
-    "dex_number": 774,
-    "name": "Orange Core Minior",
-    "other_names": {
-      "🇬🇧": "Orange Core Minior",
-      "🇩🇪": "Oranger Kern",
-      "🇫🇷": "Noyau Orange"
-    },
-    "is_variant": true,
-    "variant_of": "Minior"
-  },
-  {
-    "dex_number": 774,
-    "name": "Yellow Core Minior",
-    "other_names": {
-      "🇬🇧": "Yellow Core Minior",
-      "🇩🇪": "Gelber Kern",
-      "🇫🇷": "Noyau Jaune"
-    },
-    "is_variant": true,
-    "variant_of": "Minior"
-  },
-  {
-    "dex_number": 774,
-    "name": "Green Core Minior",
-    "other_names": {
-      "🇬🇧": "Green Core Minior",
-      "🇩🇪": "Grüner Kern",
-      "🇫🇷": "Noyau Vert"
-    },
-    "is_variant": true,
-    "variant_of": "Minior"
-  },
-  {
-    "dex_number": 774,
-    "name": "Blue Core Minior",
-    "other_names": {
-      "🇬🇧": "Blue Core Minior",
-      "🇩🇪": "Hellblauer Kern",
-      "🇫🇷": "Noyau Bleu"
-    },
-    "is_variant": true,
-    "variant_of": "Minior"
-  },
-  {
-    "dex_number": 774,
-    "name": "Indigo Core Minior",
-    "other_names": {
-      "🇬🇧": "Indigo Core Minior",
-      "🇩🇪": "Blauer Kern",
-      "🇫🇷": "Noyau Indigo"
-    },
-    "is_variant": true,
-    "variant_of": "Minior"
-  },
-  {
-    "dex_number": 774,
-    "name": "Violet Core Minior",
-    "other_names": {
-      "🇬🇧": "Violet Core Minior",
-      "🇩🇪": "Violetter Kern",
-      "🇫🇷": "Noyau Violet"
-    },
-    "is_variant": true,
-    "variant_of": "Minior"
-  },
-  {
     "dex_number": 775,
     "name": "Komala",
     "other_names": {
@@ -15709,54 +14530,6 @@
     "rarity": "legendary"
   },
   {
-    "dex_number": 800,
-    "name": "Dusk Mane Necrozma",
-    "other_names": {
-      "🇯🇵": [
-        "たそがれのたてがみ",
-        "Tasogarenotategami"
-      ],
-      "🇬🇧": "Dusk Mane Necrozma",
-      "🇩🇪": "Abendmähne",
-      "🇫🇷": "Crinière du Couchant"
-    },
-    "is_variant": true,
-    "variant_of": "Necrozma",
-    "rarity": "legendary"
-  },
-  {
-    "dex_number": 800,
-    "name": "Dawn Wings Necrozma",
-    "other_names": {
-      "🇯🇵": [
-        "あかつきのつばさ",
-        "Akatsukinotsubasa"
-      ],
-      "🇬🇧": "Dawn Wings Necrozma",
-      "🇩🇪": "Morgenschwingen",
-      "🇫🇷": "Ailes de l'Aurore"
-    },
-    "is_variant": true,
-    "variant_of": "Necrozma",
-    "rarity": "legendary"
-  },
-  {
-    "dex_number": 800,
-    "name": "Ultra Necrozma",
-    "other_names": {
-      "🇯🇵": [
-        "ウルトラネクロズマ",
-        "Urutoranekurozuma"
-      ],
-      "🇬🇧": "Ultra Necrozma",
-      "🇩🇪": "Ultra-Necrozma",
-      "🇫🇷": "Ultra-Necrozma"
-    },
-    "is_variant": true,
-    "variant_of": "Necrozma",
-    "rarity": "legendary"
-  },
-  {
     "dex_number": 801,
     "name": "Magearna",
     "other_names": {
@@ -15770,22 +14543,6 @@
       "🇫🇷": "Magearna"
     },
     "is_variant": false,
-    "rarity": "mythical"
-  },
-  {
-    "dex_number": 801,
-    "name": "Original Magearna",
-    "other_names": {
-      "🇯🇵": [
-        "５００ねんまえのいろ",
-        "500Nenmaenoiro"
-      ],
-      "🇬🇧": "Original Magearna",
-      "🇩🇪": "Originalfarbe",
-      "🇫🇷": "Couleur du Passé"
-    },
-    "is_variant": true,
-    "variant_of": "Magearna",
     "rarity": "mythical"
   },
   {
@@ -15928,16 +14685,6 @@
     "rarity": "mythical"
   },
   {
-    "dex_number": 809,
-    "name": "Gigantamax Melmetal",
-    "other_names": {
-      "🇬🇧": "Gigantamax Melmetal"
-    },
-    "is_variant": true,
-    "variant_of": "Melmetal",
-    "rarity": "mythical"
-  },
-  {
     "dex_number": 810,
     "name": "Grookey",
     "other_names": {
@@ -15978,15 +14725,6 @@
       "🇫🇷": "Gorythmic"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 812,
-    "name": "Gigantamax Rillaboom",
-    "other_names": {
-      "🇬🇧": "Gigantamax Rillaboom"
-    },
-    "is_variant": true,
-    "variant_of": "Rillaboom"
   },
   {
     "dex_number": 813,
@@ -16031,15 +14769,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 815,
-    "name": "Gigantamax Cinderace",
-    "other_names": {
-      "🇬🇧": "Gigantamax Cinderace"
-    },
-    "is_variant": true,
-    "variant_of": "Cinderace"
-  },
-  {
     "dex_number": 816,
     "name": "Sobble",
     "other_names": {
@@ -16080,15 +14809,6 @@
       "🇫🇷": "Lézargus"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 818,
-    "name": "Gigantamax Inteleon",
-    "other_names": {
-      "🇬🇧": "Gigantamax Inteleon"
-    },
-    "is_variant": true,
-    "variant_of": "Inteleon"
   },
   {
     "dex_number": 819,
@@ -16161,15 +14881,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 823,
-    "name": "Gigantamax Corviknight",
-    "other_names": {
-      "🇬🇧": "Gigantamax Corviknight"
-    },
-    "is_variant": true,
-    "variant_of": "Corviknight"
-  },
-  {
     "dex_number": 824,
     "name": "Blipbug",
     "other_names": {
@@ -16210,15 +14921,6 @@
       "🇫🇷": "Astronelle"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 826,
-    "name": "Gigantamax Orbeetle",
-    "other_names": {
-      "🇬🇧": "Gigantamax Orbeetle"
-    },
-    "is_variant": true,
-    "variant_of": "Orbeetle"
   },
   {
     "dex_number": 827,
@@ -16333,15 +15035,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 834,
-    "name": "Gigantamax Drednaw",
-    "other_names": {
-      "🇬🇧": "Gigantamax Drednaw"
-    },
-    "is_variant": true,
-    "variant_of": "Drednaw"
-  },
-  {
     "dex_number": 835,
     "name": "Yamper",
     "other_names": {
@@ -16412,15 +15105,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 839,
-    "name": "Gigantamax Coalossal",
-    "other_names": {
-      "🇬🇧": "Gigantamax Coalossal"
-    },
-    "is_variant": true,
-    "variant_of": "Coalossal"
-  },
-  {
     "dex_number": 840,
     "name": "Applin",
     "other_names": {
@@ -16449,15 +15133,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 841,
-    "name": "Gigantamax Flapple",
-    "other_names": {
-      "🇬🇧": "Gigantamax Flapple"
-    },
-    "is_variant": true,
-    "variant_of": "Flapple"
-  },
-  {
     "dex_number": 842,
     "name": "Appletun",
     "other_names": {
@@ -16470,15 +15145,6 @@
       "🇫🇷": "Dratatin"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 842,
-    "name": "Gigantamax Appletun",
-    "other_names": {
-      "🇬🇧": "Gigantamax Appletun"
-    },
-    "is_variant": true,
-    "variant_of": "Appletun"
   },
   {
     "dex_number": 843,
@@ -16507,15 +15173,6 @@
       "🇫🇷": "Dunaconda"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 844,
-    "name": "Gigantamax Sandaconda",
-    "other_names": {
-      "🇬🇧": "Gigantamax Sandaconda"
-    },
-    "is_variant": true,
-    "variant_of": "Sandaconda"
   },
   {
     "dex_number": 845,
@@ -16630,24 +15287,6 @@
     "variant_of": "Amped Toxtricity"
   },
   {
-    "dex_number": 849,
-    "name": "Gigantamax Amped Toxtricity",
-    "other_names": {
-      "🇬🇧": "Gigantamax Amped Toxtricity"
-    },
-    "is_variant": true,
-    "variant_of": "Amped Toxtricity"
-  },
-  {
-    "dex_number": 849,
-    "name": "Gigantamax Low Key Toxtricity",
-    "other_names": {
-      "🇬🇧": "Gigantamax Low Key Toxtricity"
-    },
-    "is_variant": true,
-    "variant_of": "Amped Toxtricity"
-  },
-  {
     "dex_number": 850,
     "name": "Sizzlipede",
     "other_names": {
@@ -16674,15 +15313,6 @@
       "🇫🇷": "Scolocendre"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 851,
-    "name": "Gigantamax Centiskorch",
-    "other_names": {
-      "🇬🇧": "Gigantamax Centiskorch"
-    },
-    "is_variant": true,
-    "variant_of": "Centiskorch"
   },
   {
     "dex_number": 852,
@@ -16783,15 +15413,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 858,
-    "name": "Gigantamax Hatterene",
-    "other_names": {
-      "🇬🇧": "Gigantamax Hatterene"
-    },
-    "is_variant": true,
-    "variant_of": "Hatterene"
-  },
-  {
     "dex_number": 859,
     "name": "Impidimp",
     "other_names": {
@@ -16832,15 +15453,6 @@
       "🇫🇷": "Angoliath"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 861,
-    "name": "Gigantamax Grimmsnarl",
-    "other_names": {
-      "🇬🇧": "Gigantamax Grimmsnarl"
-    },
-    "is_variant": true,
-    "variant_of": "Grimmsnarl"
   },
   {
     "dex_number": 862,
@@ -16962,15 +15574,6 @@
       "🇫🇷": "Charmilly"
     },
     "is_variant": false
-  },
-  {
-    "dex_number": 869,
-    "name": "Gigantamax Alcremie",
-    "other_names": {
-      "🇬🇧": "Gigantamax Alcremie"
-    },
-    "is_variant": true,
-    "variant_of": "Alcremie"
   },
   {
     "dex_number": 869,
@@ -17188,15 +15791,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 879,
-    "name": "Gigantamax Copperajah",
-    "other_names": {
-      "🇬🇧": "Gigantamax Copperajah"
-    },
-    "is_variant": true,
-    "variant_of": "Copperajah"
-  },
-  {
     "dex_number": 880,
     "name": "Dracozolt",
     "other_names": {
@@ -17267,15 +15861,6 @@
     "is_variant": false
   },
   {
-    "dex_number": 884,
-    "name": "Gigantamax Duraludon",
-    "other_names": {
-      "🇬🇧": "Gigantamax Duraludon"
-    },
-    "is_variant": true,
-    "variant_of": "Duraludon"
-  },
-  {
     "dex_number": 885,
     "name": "Dreepy",
     "other_names": {
@@ -17333,16 +15918,6 @@
     "rarity": "legendary"
   },
   {
-    "dex_number": 888,
-    "name": "Crowned Zacian",
-    "other_names": {
-      "🇬🇧": "Crowned Zacian"
-    },
-    "is_variant": true,
-    "variant_of": "Zacian",
-    "rarity": "legendary"
-  },
-  {
     "dex_number": 889,
     "name": "Zamazenta",
     "other_names": {
@@ -17358,16 +15933,6 @@
     "rarity": "legendary"
   },
   {
-    "dex_number": 889,
-    "name": "Crowned Zamazenta",
-    "other_names": {
-      "🇬🇧": "Crowned Zamazenta"
-    },
-    "is_variant": true,
-    "variant_of": "Zamazenta",
-    "rarity": "legendary"
-  },
-  {
     "dex_number": 890,
     "name": "Eternatus",
     "other_names": {
@@ -17380,16 +15945,6 @@
       "🇫🇷": "Éthernatos"
     },
     "is_variant": false,
-    "rarity": "legendary"
-  },
-  {
-    "dex_number": 890,
-    "name": "Eternamax Eternatus",
-    "other_names": {
-      "🇬🇧": "Eternamax Eternatus"
-    },
-    "is_variant": true,
-    "variant_of": "Eternatus",
     "rarity": "legendary"
   },
   {
@@ -17431,26 +15986,6 @@
         "Rengekiūraosu"
       ],
       "🇬🇧": "Rapid Strike Urshifu"
-    },
-    "is_variant": true,
-    "variant_of": "Urshifu",
-    "rarity": "legendary"
-  },
-  {
-    "dex_number": 892,
-    "name": "Gigantamax Single Strike Urshifu",
-    "other_names": {
-      "🇬🇧": "Gigantamax Single Strike Urshifu"
-    },
-    "is_variant": true,
-    "variant_of": "Urshifu",
-    "rarity": "legendary"
-  },
-  {
-    "dex_number": 892,
-    "name": "Gigantamax Rapid Strike Urshifu",
-    "other_names": {
-      "🇬🇧": "Gigantamax Rapid Strike Urshifu"
     },
     "is_variant": true,
     "variant_of": "Urshifu",
@@ -17557,26 +16092,6 @@
       "🇫🇷": "Sylveroy"
     },
     "is_variant": false,
-    "rarity": "legendary"
-  },
-  {
-    "dex_number": 898,
-    "name": "Ice Rider Calyrex",
-    "other_names": {
-      "🇬🇧": "Ice Rider Calyrex"
-    },
-    "is_variant": true,
-    "variant_of": "Calyrex",
-    "rarity": "legendary"
-  },
-  {
-    "dex_number": 898,
-    "name": "Shadow Rider Calyrex",
-    "other_names": {
-      "🇬🇧": "Shadow Rider Calyrex"
-    },
-    "is_variant": true,
-    "variant_of": "Calyrex",
     "rarity": "legendary"
   },
   {
@@ -17691,16 +16206,6 @@
       "🇫🇷": "Amovénus"
     },
     "is_variant": false,
-    "rarity": "legendary"
-  },
-  {
-    "dex_number": 905,
-    "name": "Therian Enamorus",
-    "other_names": {
-      "🇬🇧": "Therian Enamorus"
-    },
-    "is_variant": true,
-    "variant_of": "Enamorus",
     "rarity": "legendary"
   },
   {
