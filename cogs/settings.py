@@ -164,7 +164,7 @@ class Settings(commands.Cog):
         )
         
         embed.set_footer(text=f"Guild ID: {ctx.guild.id}")
-        await ctx.reply(embed=embed, reference=ctx.message, mention_author=False)
+        await ctx.reply(embed=embed, mention_author=False)
     
     # Global settings (bot owner only)
     @commands.command(name="set-low-prediction-channel")
