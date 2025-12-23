@@ -242,11 +242,11 @@ class Collection(commands.Cog):
             
             if total_pages > 1:
                 view = CollectionPaginationView(ctx.author.id, ctx.guild.id, 1, total_pages, self)
-                await ctx.reply(embed=embed, view=view, reference=ctx.message, mention_author=False)
+                await ctx.reply(embed=embed, view=view, mention_author=False)
             else:
-                await ctx.reply(embed=embed, reference=ctx.message, mention_author=False)
+                await ctx.reply(embed=embed, mention_author=False)
         else:
-            await ctx.reply(embed=embed, reference=ctx.message, mention_author=False)
+            await ctx.reply(embed=embed, mention_author=False)
     
     @collection_group.command(name="raw")
     async def collection_raw(self, ctx):
@@ -271,14 +271,14 @@ class Collection(commands.Cog):
                 description=f"Your collection has {len(sorted_collection)} Pokémon. View the attached file for the full list.",
                 color=EMBED_COLOR
             )
-            await ctx.reply(embed=embed, file=file, reference=ctx.message, mention_author=False)
+            await ctx.reply(embed=embed, file=file, mention_author=False)
         else:
             embed = discord.Embed(
                 title="📦 Your Collection",
                 description=f"**{len(sorted_collection)} Pokémon:** {text_content}",
                 color=EMBED_COLOR
             )
-            await ctx.reply(embed=embed, reference=ctx.message, mention_author=False)
+            await ctx.reply(embed=embed, mention_author=False)
 
 async def setup(bot):
     await bot.add_cog(Collection(bot))
