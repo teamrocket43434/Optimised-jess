@@ -21,6 +21,7 @@ class Prediction(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.pokemon_data = load_pokemon_data()
+        print(f"[AUTO-PREDICT] Channel ID set to: {AUTO_PREDICT_CHANNEL_ID}")
     
     @property
     def db(self):
@@ -214,21 +215,29 @@ class Prediction(commands.Cog):
         if message.author == self.bot.user:
             return
         
+        # Don't respond to messages without a guild (DMs)
+        if not message.guild:
+            return
+        
         # Check if predictor is available
         if self.predictor is None:
             return
         
         # Auto-predict any image in the designated channel
         if AUTO_PREDICT_CHANNEL_ID and message.channel.id == AUTO_PREDICT_CHANNEL_ID:
+            print(f"[AUTO-PREDICT] Message detected in auto-predict channel from {message.author}")
+            
             # Don't predict Poketwo spawns in auto-predict channel (they'll be handled below)
             if message.author.id != POKETWO_USER_ID:
                 image_url = await get_image_url_from_message(message)
                 
                 if image_url:
+                    print(f"[AUTO-PREDICT] Found image URL: {image_url[:50]}...")
                     try:
                         name, confidence = await self.predictor.predict(image_url, self.http_session)
                         
                         if name and confidence:
+                            print(f"[AUTO-PREDICT] Predicted: {name} ({confidence})")
                             formatted_output = format_pokemon_prediction(name, confidence)
                             
                             # Get all ping information concurrently
@@ -253,9 +262,18 @@ class Prediction(commands.Cog):
                                 formatted_output += f"\n{ping_info}"
                             
                             await message.reply(formatted_output)
+                            print(f"[AUTO-PREDICT] Sent reply successfully")
+                        else:
+                            print(f"[AUTO-PREDICT] Prediction returned None")
                     
                     except Exception as e:
-                        print(f"Auto-predict channel error: {e}")
+                        print(f"[AUTO-PREDICT] Error: {e}")
+                        import traceback
+                        traceback.print_exc()
+                else:
+                    print(f"[AUTO-PREDICT] No image found in message")
+            else:
+                print(f"[AUTO-PREDICT] Skipping Poketwo message")
         
         # Auto-detect Poketwo spawns
         if message.author.id == POKETWO_USER_ID:
