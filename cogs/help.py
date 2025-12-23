@@ -291,6 +291,7 @@ class Help(commands.Cog):
                     f"`{prefix}starboard-catch #channel` - All catches\n"
                     f"`{prefix}starboard-egg #channel` - All egg hatches\n"
                     f"`{prefix}starboard-unbox #channel` - All box openings"
+                    f"`use none at place of #channel to remove the channel for respective starboard"
                 ),
                 inline=False
             )
@@ -303,6 +304,7 @@ class Help(commands.Cog):
                     f"`{prefix}starboard-highiv #channel` - High IV (≥90%)\n"
                     f"`{prefix}starboard-lowiv #channel` - Low IV (≤10%)\n"
                     f"`{prefix}starboard-missingno #channel` - MissingNo catches"
+                    f"`use none at place of #channel to remove the channel for respective starboard"
                 ),
                 inline=False
             )
