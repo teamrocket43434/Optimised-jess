@@ -123,10 +123,6 @@ class Database:
 
         return collectors
 
-    # Shiny hunt operations
-    # Add these methods to your Database class in database.py
-    # Replace the existing shiny hunt methods with these updated versions
-
     # Add these methods to your Database class in database.py
     # Replace the existing shiny hunt methods with these updated versions
 
