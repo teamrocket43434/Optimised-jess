@@ -17,27 +17,27 @@ AUTO_PREDICT_CHANNEL_ID = 1453015934393651272  # Set to your channel ID (e.g., 1
 
 class Prediction(commands.Cog):
     """Pokemon prediction commands and auto-detection"""
-    
+
     def __init__(self, bot):
         self.bot = bot
         self.pokemon_data = load_pokemon_data()
         print(f"[AUTO-PREDICT] Channel ID set to: {AUTO_PREDICT_CHANNEL_ID}")
-    
+
     @property
     def db(self):
         """Get database from bot"""
         return self.bot.db
-    
+
     @property
     def predictor(self):
         """Get predictor from bot"""
         return self.bot.predictor
-    
+
     @property
     def http_session(self):
         """Get HTTP session from bot"""
         return self.bot.http_session
-    
+
     async def extract_image_url(self, message):
         """Extract image URL from message with multiple fallback methods"""
         # Method 1: Check message attachments
@@ -45,7 +45,7 @@ class Prediction(commands.Cog):
             for attachment in message.attachments:
                 if any(attachment.filename.lower().endswith(ext) for ext in ['.png', '.jpg', '.jpeg', '.gif', '.webp']):
                     return attachment.url
-        
+
         # Method 2: Check embeds
         if message.embeds:
             for embed in message.embeds:
@@ -53,106 +53,60 @@ class Prediction(commands.Cog):
                     return embed.image.url
                 if embed.thumbnail:
                     return embed.thumbnail.url
-        
+
         # Method 3: Check message content for URLs
         import re
         url_pattern = r'https?://[^\s<>"]+?\.(?:png|jpg|jpeg|gif|webp)'
         urls = re.findall(url_pattern, message.content, re.IGNORECASE)
         if urls:
             return urls[0]
-        
+
         # Method 4: Use the utility function as fallback
         url = await get_image_url_from_message(message)
         if url:
             return url
-        
+
         return None
-    
+
     async def get_pokemon_ping_info(self, pokemon_name: str, guild_id: int) -> str:
         """Get ping information for a Pokemon based on its rarity"""
         pokemon_data = load_pokemon_data()
         from utils import find_pokemon_by_name
         pokemon = find_pokemon_by_name(pokemon_name, pokemon_data)
-        
+
         if not pokemon:
             return None
-        
+
         settings = await self.db.get_guild_settings(guild_id)
-        
+
         if is_rare_pokemon(pokemon):
             rare_role_id = settings.get('rare_role_id')
             if rare_role_id:
                 return f"Rare Ping: <@&{rare_role_id}>"
-        
+
         rarity = pokemon.get('rarity', '').lower()
         if rarity == "regional":
             regional_role_id = settings.get('regional_role_id')
             if regional_role_id:
                 return f"Regional Ping: <@&{regional_role_id}>"
-        
+
         return None
-    
-    async def get_collectors_for_spawn(self, pokemon_name: str, guild_id: int) -> list:
-        """Get all collectors for a Pokemon spawn (including variants and rare collectors)"""
-        pokemon = None
-        from utils import find_pokemon_by_name
-        pokemon = find_pokemon_by_name(pokemon_name, self.pokemon_data)
-        
-        # Get all possible names to search for
-        search_names = [pokemon_name]
-        
-        if pokemon:
-            # If it's a variant, also search for base form collectors
-            if pokemon.get('is_variant') and pokemon.get('variant_of'):
-                search_names.append(pokemon['variant_of'])
-            
-            # Get all variants
-            variants = get_pokemon_with_variants(pokemon_name, self.pokemon_data)
-            search_names.extend(variants)
-        
-        # Remove duplicates
-        search_names = list(set([normalize_pokemon_name(name) for name in search_names]))
-        
-        # Get global AFK users
-        afk_users = await self.db.get_collection_afk_users()
-        
-        # Get collectors
-        collectors = await self.db.get_collectors_for_pokemon(guild_id, search_names, afk_users)
-        
-        # If rare Pokemon, add rare collectors
-        if pokemon and is_rare_pokemon(pokemon):
-            rare_collectors = await self.db.get_rare_collectors(guild_id, afk_users)
-            collectors = list(set(collectors + rare_collectors))
-        
-        return collectors
-    
+
     async def get_shiny_hunters_for_spawn(self, pokemon_name: str, guild_id: int) -> list:
-        """Get all shiny hunters for a Pokemon spawn (including variants)"""
-        pokemon = None
-        from utils import find_pokemon_by_name
-        pokemon = find_pokemon_by_name(pokemon_name, self.pokemon_data)
-        
-        # Get all possible names to search for
+        """Get all shiny hunters for a Pokemon spawn
+
+        Only checks for hunters who are hunting THIS EXACT Pokemon.
+        The database method handles matching against their hunt list.
+        """
+        # Only search for the exact Pokemon that spawned
         search_names = [pokemon_name]
-        
-        if pokemon:
-            # If it's a variant, also search for base form hunters
-            if pokemon.get('is_variant') and pokemon.get('variant_of'):
-                search_names.append(pokemon['variant_of'])
-            
-            # Get all variants
-            variants = get_pokemon_with_variants(pokemon_name, self.pokemon_data)
-            search_names.extend(variants)
-        
-        # Remove duplicates
-        search_names = list(set([normalize_pokemon_name(name) for name in search_names]))
-        
+
         # Get global AFK users
         afk_users = await self.db.get_shiny_hunt_afk_users()
-        
-        # Get hunters
+
+        # Get hunters - the DB method will check if this Pokemon matches their hunt list
         hunters_data = await self.db.get_shiny_hunters_for_pokemon(guild_id, search_names, afk_users)
-        
+
         # Format hunters (show AFK status)
         formatted_hunters = []
         for user_id, is_afk in hunters_data:
@@ -160,57 +114,84 @@ class Prediction(commands.Cog):
                 formatted_hunters.append(f"{user_id}(AFK)")
             else:
                 formatted_hunters.append(f"<@{user_id}>")
-        
+
         return formatted_hunters
-    
+
+
+    async def get_collectors_for_spawn(self, pokemon_name: str, guild_id: int) -> list:
+        """Get all collectors for a Pokemon spawn
+
+        Only checks for collectors who have collected THIS EXACT Pokemon.
+        The database method handles matching against their collection.
+        """
+        pokemon = None
+        from utils import find_pokemon_by_name
+        pokemon = find_pokemon_by_name(pokemon_name, self.pokemon_data)
+
+        # Only search for the exact Pokemon that spawned
+        search_names = [pokemon_name]
+
+        # Get global AFK users
+        afk_users = await self.db.get_collection_afk_users()
+
+        # Get collectors
+        collectors = await self.db.get_collectors_for_pokemon(guild_id, search_names, afk_users)
+
+        # If rare Pokemon, add rare collectors
+        if pokemon and is_rare_pokemon(pokemon):
+            rare_collectors = await self.db.get_rare_collectors(guild_id, afk_users)
+            collectors = list(set(collectors + rare_collectors))
+
+        return collectors
+
     async def _predict_pokemon(self, image_url: str, guild_id: int):
         """Helper method for Pokemon prediction"""
         if self.predictor is None:
             return "Predictor not initialized, please try again later."
-        
+
         if self.http_session is None:
             return "HTTP session not available."
-        
+
         try:
             # Use async prediction
             name, confidence = await self.predictor.predict(image_url, self.http_session)
-            
+
             if not name or not confidence:
                 return "Could not predict Pokemon from the provided image."
-            
+
             formatted_output = format_pokemon_prediction(name, confidence)
-            
+
             # Get ping information concurrently
             hunters_task = self.get_shiny_hunters_for_spawn(name, guild_id)
             collectors_task = self.get_collectors_for_spawn(name, guild_id)
             ping_info_task = self.get_pokemon_ping_info(name, guild_id)
-            
+
             hunters, collectors, ping_info = await asyncio.gather(
                 hunters_task, collectors_task, ping_info_task,
                 return_exceptions=True
             )
-            
+
             # Handle results safely
             if isinstance(hunters, list) and hunters:
                 formatted_output += f"\nShiny Hunters: {' '.join(hunters)}"
-            
+
             if isinstance(collectors, list) and collectors:
                 collector_mentions = " ".join([f"<@{user_id}>" for user_id in collectors])
                 formatted_output += f"\nCollectors: {collector_mentions}"
-            
+
             if isinstance(ping_info, str) and ping_info:
                 formatted_output += f"\n{ping_info}"
-            
+
             return formatted_output
-        
+
         except Exception as e:
             print(f"Prediction error: {e}")
             return f"Error: {str(e)[:100]}"
-    
+
     @commands.command(name="predict")
     async def predict_command(self, ctx, *, image_url: str = None):
         """Predict Pokemon from image URL or replied message
-        
+
         Examples:
             m!predict <image_url>
             m!predict (reply to a message with image)
@@ -229,69 +210,69 @@ class Prediction(commands.Cog):
             except Exception as e:
                 await ctx.reply(f"Error fetching replied message: {str(e)[:100]}", mention_author=False)
                 return
-        
+
         # If still no image URL found
         if not image_url:
             await ctx.reply("Please provide an image URL after m!predict or reply to a message with an image.", mention_author=False)
             return
-        
+
         result = await self._predict_pokemon(image_url, ctx.guild.id)
         await ctx.reply(result, mention_author=False)
-    
+
     @commands.Cog.listener()
     async def on_message(self, message):
         """Handle auto-detection of Poketwo spawns and auto-predict channel"""
         # Don't respond to bot's own messages
         if message.author == self.bot.user:
             return
-        
+
         # Don't respond to messages without a guild (DMs)
         if not message.guild:
             return
-        
+
         # Check if predictor is available
         if self.predictor is None:
             return
-        
+
         # Auto-predict any image in the designated channel (INCLUDING POKETWO)
         if AUTO_PREDICT_CHANNEL_ID and message.channel.id == AUTO_PREDICT_CHANNEL_ID:
             image_url = await self.extract_image_url(message)
-            
+
             if image_url:
                 try:
                     name, confidence = await self.predictor.predict(image_url, self.http_session)
-                    
+
                     if name and confidence:
                         formatted_output = format_pokemon_prediction(name, confidence)
-                        
+
                         # Get all ping information concurrently
                         tasks = [
                             self.get_shiny_hunters_for_spawn(name, message.guild.id),
                             self.get_collectors_for_spawn(name, message.guild.id),
                             self.get_pokemon_ping_info(name, message.guild.id)
                         ]
-                        
+
                         results = await asyncio.gather(*tasks, return_exceptions=True)
                         hunters, collectors, ping_info = results
-                        
+
                         # Handle results safely
                         if isinstance(hunters, list) and hunters:
                             formatted_output += f"\nShiny Hunters: {' '.join(hunters)}"
-                        
+
                         if isinstance(collectors, list) and collectors:
                             collector_mentions = " ".join([f"<@{user_id}>" for user_id in collectors])
                             formatted_output += f"\nCollectors: {collector_mentions}"
-                        
+
                         if isinstance(ping_info, str) and ping_info:
                             formatted_output += f"\n{ping_info}"
-                        
+
                         await message.reply(formatted_output)
-                
+
                 except Exception as e:
                     print(f"[AUTO-PREDICT] Error: {e}")
                     import traceback
                     traceback.print_exc()
-        
+
         # Auto-detect Poketwo spawns in OTHER channels (not auto-predict channel)
         elif message.author.id == POKETWO_USER_ID:
             # Check if message has embeds with spawn titles
@@ -302,64 +283,64 @@ class Prediction(commands.Cog):
                     if (embed.title == "A wild pokémon has appeared!" or 
                         (embed.title.endswith("A new wild pokémon has appeared!") and 
                          "fled." in embed.title)):
-                        
+
                         image_url = await self.extract_image_url(message)
-                        
+
                         if image_url:
                             try:
                                 # Use async prediction
                                 name, confidence = await self.predictor.predict(image_url, self.http_session)
-                                
+
                                 if name and confidence:
                                     # Parse confidence
                                     confidence_str = str(confidence).rstrip('%')
                                     try:
                                         confidence_value = float(confidence_str)
-                                        
+
                                         # ALWAYS send the prediction in the spawn channel
                                         formatted_output = format_pokemon_prediction(name, confidence)
-                                        
+
                                         # Get all ping information concurrently
                                         tasks = [
                                             self.get_shiny_hunters_for_spawn(name, message.guild.id),
                                             self.get_collectors_for_spawn(name, message.guild.id),
                                             self.get_pokemon_ping_info(name, message.guild.id)
                                         ]
-                                        
+
                                         results = await asyncio.gather(*tasks, return_exceptions=True)
                                         hunters, collectors, ping_info = results
-                                        
+
                                         # Handle results safely
                                         if isinstance(hunters, list) and hunters:
                                             formatted_output += f"\nShiny Hunters: {' '.join(hunters)}"
-                                        
+
                                         if isinstance(collectors, list) and collectors:
                                             collector_mentions = " ".join([f"<@{user_id}>" for user_id in collectors])
                                             formatted_output += f"\nCollectors: {collector_mentions}"
-                                        
+
                                         if isinstance(ping_info, str) and ping_info:
                                             formatted_output += f"\n{ping_info}"
-                                        
+
                                         # Send prediction in spawn channel
                                         await message.reply(formatted_output)
-                                        
+
                                         # If low confidence, ALSO send to low prediction channel
                                         if confidence_value < PREDICTION_CONFIDENCE:
                                             low_channel_id = await self.db.get_low_prediction_channel()
-                                            
+
                                             if low_channel_id:
                                                 low_channel = self.bot.get_channel(low_channel_id)
-                                                
+
                                                 if low_channel:
                                                     embed = discord.Embed(
                                                         title="Low Confidence Prediction",
                                                         description=f"**Pokemon:** {name}\n**Confidence:** {confidence}\n**Server:** {message.guild.name}\n**Channel:** {message.channel.mention}",
                                                         color=0xff9900
                                                     )
-                                                    
+
                                                     if image_url:
                                                         embed.set_thumbnail(url=image_url)
-                                                    
+
                                                     # Add jump button
                                                     view = discord.ui.View()
                                                     jump_button = discord.ui.Button(
@@ -369,14 +350,14 @@ class Prediction(commands.Cog):
                                                         style=discord.ButtonStyle.link
                                                     )
                                                     view.add_item(jump_button)
-                                                    
+
                                                     await low_channel.send(embed=embed, view=view)
-                                                
+
                                                 print(f"Low confidence prediction: {name} ({confidence}) in {message.guild.name}")
-                                    
+
                                     except ValueError:
                                         print(f"Could not parse confidence value: {confidence}")
-                            
+
                             except Exception as e:
                                 print(f"Auto-detection error: {e}")
 
