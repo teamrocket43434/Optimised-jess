@@ -27,16 +27,25 @@ class ShinyHunt(commands.Cog):
         if not pokemon:
             return None
         
-        # Get dex number, handling both direct number and nested structure
-        dex = pokemon.get('dex')
-        if isinstance(dex, dict):
-            return dex.get('national')
-        return dex
+        return pokemon.get('dex_number')
     
     def has_variants(self, pokemon_name: str) -> bool:
         """Check if a Pokemon has multiple variants/forms"""
         variants = get_pokemon_with_variants(pokemon_name, self.pokemon_data)
         return variants and len(variants) > 1
+    
+    def get_base_name_from_variant(self, pokemon_name: str) -> str:
+        """Get the base Pokemon name, removing form/variant prefixes"""
+        pokemon = find_pokemon_by_name_flexible(pokemon_name, self.pokemon_data)
+        if not pokemon:
+            return pokemon_name
+        
+        # If it's a variant, return what it's a variant of
+        if pokemon.get('is_variant') and pokemon.get('variant_of'):
+            return pokemon['variant_of']
+        
+        # Otherwise return the Pokemon's name
+        return pokemon.get('name', pokemon_name)
     
     @commands.command(name="sh")
     async def shiny_hunt_command(self, ctx, *, args: str = None):
@@ -78,9 +87,11 @@ class ShinyHunt(commands.Cog):
         
         # Parse Pokemon names
         pokemon_to_hunt = []
+        using_all = False
         
         # Check if using "all" keyword
         if args_lower.endswith(" all"):
+            using_all = True
             base_name = args[:-4].strip()
             variants = get_pokemon_with_variants(base_name, self.pokemon_data)
             
@@ -121,21 +132,20 @@ class ShinyHunt(commands.Cog):
             return
         
         # Warning for Pokemon with variants when not using "all"
-        if len(pokemon_to_hunt) == 1 and not args_lower.endswith(" all"):
-            base_pokemon_name = pokemon_to_hunt[0]
-            if self.has_variants(base_pokemon_name):
-                # Get the base name without form
-                base_name_parts = base_pokemon_name.split()
-                potential_base = base_name_parts[-1] if len(base_name_parts) > 1 else base_pokemon_name
+        if len(pokemon_to_hunt) == 1 and not using_all:
+            hunted_pokemon = pokemon_to_hunt[0]
+            if self.has_variants(hunted_pokemon):
+                # Get the base name for the warning message
+                base_name = self.get_base_name_from_variant(hunted_pokemon)
                 
                 embed = discord.Embed(
                     title="⚠️ Variant Warning",
-                    description=f"**{base_pokemon_name}** has multiple forms/variants!\n\n"
-                                f"You will **only** be pinged for **{base_pokemon_name}**, not its other forms.\n\n"
+                    description=f"**{hunted_pokemon}** has multiple forms/variants!\n\n"
+                                f"You will **only** be pinged for **{hunted_pokemon}**, not its other forms.\n\n"
                                 f"To hunt all variants, use:\n"
-                                f"`m!sh {potential_base} all`\n\n"
+                                f"`m!sh {base_name} all`\n\n"
                                 f"Or specify the exact variants you want:\n"
-                                f"`m!sh Alolan {potential_base}, Galarian {potential_base}`",
+                                f"`m!sh Alolan {base_name}, Galarian {base_name}`",
                     color=0xFFA500  # Orange color for warning
                 )
                 await ctx.reply(embed=embed, mention_author=False)
