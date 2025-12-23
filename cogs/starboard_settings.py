@@ -232,7 +232,7 @@ class StarboardSettings(commands.Cog):
             embed.add_field(name="Unbox Channel", value="Not set", inline=True)
         
         embed.set_footer(text=f"Guild ID: {ctx.guild.id}")
-        await ctx.reply(embed=embed, reference=ctx.message, mention_author=False)
+        await ctx.reply(embed=embed, mention_author=False)
     
     # Error handlers
     @starboard_catch_command.error
