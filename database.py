@@ -66,7 +66,7 @@ class Database:
             print("✅ Database indexes created")
         except Exception as e:
             print(f"Warning: Could not create indexes: {e}")
-            
+
     def close(self):
         """Close database connection"""
         if self.client:
@@ -124,11 +124,22 @@ class Database:
         return collectors
 
     # Shiny hunt operations
-    async def set_shiny_hunt(self, user_id: int, guild_id: int, pokemon_name: str):
-        """Set user's shiny hunt"""
+    # Add these methods to your Database class in database.py
+    # Replace the existing shiny hunt methods with these updated versions
+
+    async def set_shiny_hunt(self, user_id: int, guild_id: int, pokemon_names):
+        """Set user's shiny hunt - supports single Pokemon or list of variants
+
+        Args:
+            pokemon_names: Either a string (single Pokemon) or list of strings (multiple variants)
+        """
+        # Normalize to list
+        if isinstance(pokemon_names, str):
+            pokemon_names = [pokemon_names]
+
         await self.db.shiny_hunts.update_one(
             {"user_id": user_id, "guild_id": guild_id},
-            {"$set": {"pokemon": pokemon_name}},
+            {"$set": {"pokemon": pokemon_names}},
             upsert=True
         )
 
@@ -139,22 +150,48 @@ class Database:
         )
         return result.deleted_count > 0
 
-    async def get_user_shiny_hunt(self, user_id: int, guild_id: int) -> Optional[str]:
-        """Get user's current shiny hunt"""
+    async def get_user_shiny_hunt(self, user_id: int, guild_id: int):
+        """Get user's current shiny hunt
+
+        Returns:
+            List of Pokemon names, or None if no hunt active
+        """
         hunt = await self.db.shiny_hunts.find_one(
             {"user_id": user_id, "guild_id": guild_id}
         )
-        return hunt.get('pokemon') if hunt else None
+        if not hunt:
+            return None
+
+        pokemon = hunt.get('pokemon')
+
+        # Handle backward compatibility - convert string to list
+        if isinstance(pokemon, str):
+            return [pokemon]
+
+        return pokemon if pokemon else None
 
     async def get_shiny_hunters_for_pokemon(self, guild_id: int, pokemon_names: List[str], afk_users: List[int]) -> List[int]:
-        """Get all users hunting any of the Pokemon names"""
+        """Get all users hunting any of the Pokemon names
+
+        Args:
+            guild_id: Guild ID
+            pokemon_names: List of Pokemon names to check
+            afk_users: List of user IDs who are AFK
+
+        Returns:
+            List of tuples: (user_id, is_afk)
+        """
         afk_users_set = set(afk_users)
         hunters = []
 
+        # Query for hunts where pokemon field contains any of the target names
         hunts = await self.db.shiny_hunts.find(
             {
                 "guild_id": guild_id,
-                "pokemon": {"$in": pokemon_names}
+                "$or": [
+                    {"pokemon": {"$in": pokemon_names}},  # For list fields
+                    {"pokemon": {"$in": pokemon_names}}   # Works for both string and array
+                ]
             },
             {"user_id": 1}
         ).to_list(length=None)
