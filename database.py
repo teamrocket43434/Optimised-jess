@@ -289,3 +289,110 @@ class Database:
         """Get global low prediction channel"""
         settings = await self.db.global_settings.find_one({"_id": "prediction"})
         return settings.get('low_prediction_channel_id') if settings else None
+
+    # Add to Database class in database.py
+
+    # Starboard channel settings
+    async def set_starboard_catch_channel(self, guild_id: int, channel_id: int):
+        """Set catch starboard channel"""
+        await self.db.guild_settings.update_one(
+            {"guild_id": guild_id},
+            {"$set": {"starboard_catch_channel_id": channel_id}},
+            upsert=True
+        )
+    
+    async def set_starboard_egg_channel(self, guild_id: int, channel_id: int):
+        """Set egg starboard channel"""
+        await self.db.guild_settings.update_one(
+            {"guild_id": guild_id},
+            {"$set": {"starboard_egg_channel_id": channel_id}},
+            upsert=True
+        )
+    
+    async def set_starboard_unbox_channel(self, guild_id: int, channel_id: int):
+        """Set unbox starboard channel"""
+        await self.db.guild_settings.update_one(
+            {"guild_id": guild_id},
+            {"$set": {"starboard_unbox_channel_id": channel_id}},
+            upsert=True
+        )
+    
+    async def set_starboard_shiny_channel(self, guild_id: int, channel_id: int):
+        """Set shiny catch starboard channel"""
+        await self.db.guild_settings.update_one(
+            {"guild_id": guild_id},
+            {"$set": {"starboard_shiny_channel_id": channel_id}},
+            upsert=True
+        )
+    
+    async def set_starboard_gigantamax_channel(self, guild_id: int, channel_id: int):
+        """Set Gigantamax catch starboard channel"""
+        await self.db.guild_settings.update_one(
+            {"guild_id": guild_id},
+            {"$set": {"starboard_gigantamax_channel_id": channel_id}},
+            upsert=True
+        )
+    
+    async def set_starboard_highiv_channel(self, guild_id: int, channel_id: int):
+        """Set high IV starboard channel"""
+        await self.db.guild_settings.update_one(
+            {"guild_id": guild_id},
+            {"$set": {"starboard_highiv_channel_id": channel_id}},
+            upsert=True
+        )
+    
+    async def set_starboard_lowiv_channel(self, guild_id: int, channel_id: int):
+        """Set low IV starboard channel"""
+        await self.db.guild_settings.update_one(
+            {"guild_id": guild_id},
+            {"$set": {"starboard_lowiv_channel_id": channel_id}},
+            upsert=True
+        )
+    
+    async def set_starboard_missingno_channel(self, guild_id: int, channel_id: int):
+        """Set MissingNo starboard channel"""
+        await self.db.guild_settings.update_one(
+            {"guild_id": guild_id},
+            {"$set": {"starboard_missingno_channel_id": channel_id}},
+            upsert=True
+        )
+    
+    # Global starboard channels
+    async def set_global_starboard_catch_channel(self, channel_id: int):
+        """Set global catch starboard channel"""
+        await self.db.global_settings.update_one(
+            {"_id": "starboard_catch"},
+            {"$set": {"global_channel_id": channel_id}},
+            upsert=True
+        )
+    
+    async def get_global_starboard_catch_channel(self) -> Optional[int]:
+        """Get global catch starboard channel"""
+        settings = await self.db.global_settings.find_one({"_id": "starboard_catch"})
+        return settings.get('global_channel_id') if settings else None
+    
+    async def set_global_starboard_egg_channel(self, channel_id: int):
+        """Set global egg starboard channel"""
+        await self.db.global_settings.update_one(
+            {"_id": "starboard_egg"},
+            {"$set": {"global_channel_id": channel_id}},
+            upsert=True
+        )
+    
+    async def get_global_starboard_egg_channel(self) -> Optional[int]:
+        """Get global egg starboard channel"""
+        settings = await self.db.global_settings.find_one({"_id": "starboard_egg"})
+        return settings.get('global_channel_id') if settings else None
+    
+    async def set_global_starboard_unbox_channel(self, channel_id: int):
+        """Set global unbox starboard channel"""
+        await self.db.global_settings.update_one(
+            {"_id": "starboard_unbox"},
+            {"$set": {"global_channel_id": channel_id}},
+            upsert=True
+        )
+    
+    async def get_global_starboard_unbox_channel(self) -> Optional[int]:
+        """Get global unbox starboard channel"""
+        settings = await self.db.global_settings.find_one({"_id": "starboard_unbox"})
+        return settings.get('global_channel_id') if settings else None
