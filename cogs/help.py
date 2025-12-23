@@ -372,6 +372,7 @@ class Help(commands.Cog):
             embed.add_field(
                 name="⭐ Starboard Settings",
                 value=(
+                    f"`{prefix}starboard-all`\n"
                     f"`{prefix}starboard-settings`\n"
                     f"`{prefix}starboard-catch/egg/unbox`\n"
                     f"`{prefix}starboard-shiny/gigantamax`\n"
