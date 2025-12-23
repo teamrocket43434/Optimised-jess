@@ -1,0 +1,262 @@
+"""Starboard channel configuration and settings"""
+import discord
+from discord.ext import commands
+from config import EMBED_COLOR
+
+class StarboardSettings(commands.Cog):
+    """Starboard channel configuration"""
+    
+    def __init__(self, bot):
+        self.bot = bot
+    
+    @property
+    def db(self):
+        """Get database from bot"""
+        return self.bot.db
+    
+    # Server starboard channels (admin only)
+    @commands.command(name="starboard-catch")
+    @commands.has_permissions(administrator=True)
+    async def starboard_catch_command(self, ctx, channel: discord.TextChannel = None):
+        """Set the catch starboard channel for this server
+        
+        Example: m!starboard-catch #catches
+        """
+        if not channel:
+            await ctx.reply("❌ Please mention a channel or provide a channel ID.", mention_author=False)
+            return
+        
+        await self.db.set_starboard_catch_channel(ctx.guild.id, channel.id)
+        await ctx.reply(f"✅ Catch starboard channel set to {channel.mention}", mention_author=False)
+    
+    @commands.command(name="starboard-egg")
+    @commands.has_permissions(administrator=True)
+    async def starboard_egg_command(self, ctx, channel: discord.TextChannel = None):
+        """Set the egg hatch starboard channel for this server
+        
+        Example: m!starboard-egg #egg-hatches
+        """
+        if not channel:
+            await ctx.reply("❌ Please mention a channel or provide a channel ID.", mention_author=False)
+            return
+        
+        await self.db.set_starboard_egg_channel(ctx.guild.id, channel.id)
+        await ctx.reply(f"✅ Egg starboard channel set to {channel.mention}", mention_author=False)
+    
+    @commands.command(name="starboard-unbox")
+    @commands.has_permissions(administrator=True)
+    async def starboard_unbox_command(self, ctx, channel: discord.TextChannel = None):
+        """Set the unbox starboard channel for this server
+        
+        Example: m!starboard-unbox #unboxes
+        """
+        if not channel:
+            await ctx.reply("❌ Please mention a channel or provide a channel ID.", mention_author=False)
+            return
+        
+        await self.db.set_starboard_unbox_channel(ctx.guild.id, channel.id)
+        await ctx.reply(f"✅ Unbox starboard channel set to {channel.mention}", mention_author=False)
+    
+    @commands.command(name="starboard-shiny")
+    @commands.has_permissions(administrator=True)
+    async def starboard_shiny_command(self, ctx, channel: discord.TextChannel = None):
+        """Set the shiny catch starboard channel for this server
+        
+        Example: m!starboard-shiny #shinies
+        """
+        if not channel:
+            await ctx.reply("❌ Please mention a channel or provide a channel ID.", mention_author=False)
+            return
+        
+        await self.db.set_starboard_shiny_channel(ctx.guild.id, channel.id)
+        await ctx.reply(f"✅ Shiny catch starboard channel set to {channel.mention}", mention_author=False)
+    
+    @commands.command(name="starboard-gigantamax")
+    @commands.has_permissions(administrator=True)
+    async def starboard_gigantamax_command(self, ctx, channel: discord.TextChannel = None):
+        """Set the Gigantamax catch starboard channel for this server
+        
+        Example: m!starboard-gigantamax #gmax
+        """
+        if not channel:
+            await ctx.reply("❌ Please mention a channel or provide a channel ID.", mention_author=False)
+            return
+        
+        await self.db.set_starboard_gigantamax_channel(ctx.guild.id, channel.id)
+        await ctx.reply(f"✅ Gigantamax starboard channel set to {channel.mention}", mention_author=False)
+    
+    @commands.command(name="starboard-highiv")
+    @commands.has_permissions(administrator=True)
+    async def starboard_highiv_command(self, ctx, channel: discord.TextChannel = None):
+        """Set the high IV starboard channel for this server
+        
+        Example: m!starboard-highiv #high-ivs
+        """
+        if not channel:
+            await ctx.reply("❌ Please mention a channel or provide a channel ID.", mention_author=False)
+            return
+        
+        await self.db.set_starboard_highiv_channel(ctx.guild.id, channel.id)
+        await ctx.reply(f"✅ High IV starboard channel set to {channel.mention}", mention_author=False)
+    
+    @commands.command(name="starboard-lowiv")
+    @commands.has_permissions(administrator=True)
+    async def starboard_lowiv_command(self, ctx, channel: discord.TextChannel = None):
+        """Set the low IV starboard channel for this server
+        
+        Example: m!starboard-lowiv #low-ivs
+        """
+        if not channel:
+            await ctx.reply("❌ Please mention a channel or provide a channel ID.", mention_author=False)
+            return
+        
+        await self.db.set_starboard_lowiv_channel(ctx.guild.id, channel.id)
+        await ctx.reply(f"✅ Low IV starboard channel set to {channel.mention}", mention_author=False)
+    
+    @commands.command(name="starboard-missingno")
+    @commands.has_permissions(administrator=True)
+    async def starboard_missingno_command(self, ctx, channel: discord.TextChannel = None):
+        """Set the MissingNo catch starboard channel for this server
+        
+        Example: m!starboard-missingno #missingno
+        """
+        if not channel:
+            await ctx.reply("❌ Please mention a channel or provide a channel ID.", mention_author=False)
+            return
+        
+        await self.db.set_starboard_missingno_channel(ctx.guild.id, channel.id)
+        await ctx.reply(f"✅ MissingNo starboard channel set to {channel.mention}", mention_author=False)
+    
+    # Global starboard channels (bot owner only)
+    @commands.command(name="global-starboard-catch")
+    @commands.is_owner()
+    async def global_starboard_catch_command(self, ctx, channel: discord.TextChannel = None):
+        """Set the global catch starboard channel (bot owner only)
+        
+        Example: m!global-starboard-catch #global-catches
+        """
+        if not channel:
+            await ctx.reply("❌ Please mention a channel or provide a channel ID.", mention_author=False)
+            return
+        
+        await self.db.set_global_starboard_catch_channel(channel.id)
+        await ctx.reply(f"✅ Global catch starboard channel set to {channel.mention}", mention_author=False)
+    
+    @commands.command(name="global-starboard-egg")
+    @commands.is_owner()
+    async def global_starboard_egg_command(self, ctx, channel: discord.TextChannel = None):
+        """Set the global egg starboard channel (bot owner only)"""
+        if not channel:
+            await ctx.reply("❌ Please mention a channel or provide a channel ID.", mention_author=False)
+            return
+        
+        await self.db.set_global_starboard_egg_channel(channel.id)
+        await ctx.reply(f"✅ Global egg starboard channel set to {channel.mention}", mention_author=False)
+    
+    @commands.command(name="global-starboard-unbox")
+    @commands.is_owner()
+    async def global_starboard_unbox_command(self, ctx, channel: discord.TextChannel = None):
+        """Set the global unbox starboard channel (bot owner only)"""
+        if not channel:
+            await ctx.reply("❌ Please mention a channel or provide a channel ID.", mention_author=False)
+            return
+        
+        await self.db.set_global_starboard_unbox_channel(channel.id)
+        await ctx.reply(f"✅ Global unbox starboard channel set to {channel.mention}", mention_author=False)
+    
+    # View starboard settings
+    @commands.command(name="starboard-settings")
+    async def starboard_settings_command(self, ctx):
+        """View current starboard channel settings for this server"""
+        settings = await self.db.get_guild_settings(ctx.guild.id)
+        
+        embed = discord.Embed(
+            title=f"⭐ Starboard Settings for {ctx.guild.name}",
+            color=EMBED_COLOR
+        )
+        
+        # Catch channels
+        catch_channel_id = settings.get('starboard_catch_channel_id')
+        if catch_channel_id:
+            embed.add_field(name="Catch Channel", value=f"<#{catch_channel_id}>", inline=True)
+        else:
+            embed.add_field(name="Catch Channel", value="Not set", inline=True)
+        
+        # Shiny channel
+        shiny_channel_id = settings.get('starboard_shiny_channel_id')
+        if shiny_channel_id:
+            embed.add_field(name="Shiny Channel", value=f"<#{shiny_channel_id}>", inline=True)
+        else:
+            embed.add_field(name="Shiny Channel", value="Not set", inline=True)
+        
+        # Gigantamax channel
+        gmax_channel_id = settings.get('starboard_gigantamax_channel_id')
+        if gmax_channel_id:
+            embed.add_field(name="Gigantamax Channel", value=f"<#{gmax_channel_id}>", inline=True)
+        else:
+            embed.add_field(name="Gigantamax Channel", value="Not set", inline=True)
+        
+        # High IV channel
+        highiv_channel_id = settings.get('starboard_highiv_channel_id')
+        if highiv_channel_id:
+            embed.add_field(name="High IV Channel", value=f"<#{highiv_channel_id}>", inline=True)
+        else:
+            embed.add_field(name="High IV Channel", value="Not set", inline=True)
+        
+        # Low IV channel
+        lowiv_channel_id = settings.get('starboard_lowiv_channel_id')
+        if lowiv_channel_id:
+            embed.add_field(name="Low IV Channel", value=f"<#{lowiv_channel_id}>", inline=True)
+        else:
+            embed.add_field(name="Low IV Channel", value="Not set", inline=True)
+        
+        # MissingNo channel
+        missingno_channel_id = settings.get('starboard_missingno_channel_id')
+        if missingno_channel_id:
+            embed.add_field(name="MissingNo Channel", value=f"<#{missingno_channel_id}>", inline=True)
+        else:
+            embed.add_field(name="MissingNo Channel", value="Not set", inline=True)
+        
+        # Egg channel
+        egg_channel_id = settings.get('starboard_egg_channel_id')
+        if egg_channel_id:
+            embed.add_field(name="Egg Channel", value=f"<#{egg_channel_id}>", inline=True)
+        else:
+            embed.add_field(name="Egg Channel", value="Not set", inline=True)
+        
+        # Unbox channel
+        unbox_channel_id = settings.get('starboard_unbox_channel_id')
+        if unbox_channel_id:
+            embed.add_field(name="Unbox Channel", value=f"<#{unbox_channel_id}>", inline=True)
+        else:
+            embed.add_field(name="Unbox Channel", value="Not set", inline=True)
+        
+        embed.set_footer(text=f"Guild ID: {ctx.guild.id}")
+        await ctx.reply(embed=embed, reference=ctx.message, mention_author=False)
+    
+    # Error handlers
+    @starboard_catch_command.error
+    @starboard_egg_command.error
+    @starboard_unbox_command.error
+    @starboard_shiny_command.error
+    @starboard_gigantamax_command.error
+    @starboard_highiv_command.error
+    @starboard_lowiv_command.error
+    @starboard_missingno_command.error
+    async def starboard_command_error(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.reply("❌ You need administrator permissions to use this command.", mention_author=False)
+        elif isinstance(error, commands.BadArgument):
+            await ctx.reply("❌ Invalid channel mention or ID.", mention_author=False)
+    
+    @global_starboard_catch_command.error
+    @global_starboard_egg_command.error
+    @global_starboard_unbox_command.error
+    async def global_starboard_command_error(self, ctx, error):
+        if isinstance(error, commands.NotOwner):
+            await ctx.reply("❌ Only the bot owner can use this command.", mention_author=False)
+        elif isinstance(error, commands.BadArgument):
+            await ctx.reply("❌ Invalid channel mention or ID.", mention_author=False)
+
+async def setup(bot):
+    await bot.add_cog(StarboardSettings(bot))
