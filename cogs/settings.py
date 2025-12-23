@@ -155,6 +155,13 @@ class Settings(commands.Cog):
             embed.add_field(name="Regional Role", value=f"<@&{regional_role_id}>", inline=True)
         else:
             embed.add_field(name="Regional Role", value="Not set", inline=True)
+
+        # Add note about starboard settings
+        embed.add_field(
+            name="⭐ Starboard Settings",
+            value="Use `m!starboard-settings` to view starboard channel configuration",
+            inline=False
+        )
         
         embed.set_footer(text=f"Guild ID: {ctx.guild.id}")
         await ctx.reply(embed=embed, reference=ctx.message, mention_author=False)
