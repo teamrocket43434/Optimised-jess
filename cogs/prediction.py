@@ -78,19 +78,29 @@ class Prediction(commands.Cog):
             return None
 
         settings = await self.db.get_guild_settings(guild_id)
+        pings = []
 
-        if is_rare_pokemon(pokemon):
+        # Get rarity - handle both string and list
+        rarity_value = pokemon.get('rarity', '')
+        rarities = rarity_value if isinstance(rarity_value, list) else [rarity_value]
+
+        # Normalize to lowercase
+        rarities = [r.lower() for r in rarities if r]
+
+        # Check for rare ping (Legendary, Mythical, Ultra Beast)
+        if any(r in ['legendary', 'mythical', 'ultra beast'] for r in rarities):
             rare_role_id = settings.get('rare_role_id')
             if rare_role_id:
-                return f"Rare Ping: <@&{rare_role_id}>"
+                pings.append(f"Rare Ping: <@&{rare_role_id}>")
 
-        rarity = pokemon.get('rarity', '').lower()
-        if rarity == "regional":
+        # Check for regional ping
+        if 'regional' in rarities:
             regional_role_id = settings.get('regional_role_id')
             if regional_role_id:
-                return f"Regional Ping: <@&{regional_role_id}>"
+                pings.append(f"Regional Ping: <@&{regional_role_id}>")
 
-        return None
+        # Return all pings joined together
+        return "\n".join(pings) if pings else None
 
     async def get_shiny_hunters_for_spawn(self, pokemon_name: str, guild_id: int) -> list:
         """Get all shiny hunters for a Pokemon spawn
