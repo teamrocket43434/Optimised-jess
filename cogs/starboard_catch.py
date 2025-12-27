@@ -304,15 +304,15 @@ class StarboardCatch(commands.Cog):
         
         return False
     
-    @commands.command(name="catchcheck")
+    @commands.command(name="catchcheck", aliases=["cc", "checkcatch"])
     @commands.has_permissions(administrator=True)
     async def catch_check_command(self, ctx, *, input_data: str = None):
         """Manually check a Poketwo catch message and send to starboard
         
         Usage:
-            m!catchcheck (reply to a message)
-            m!catchcheck <message_id>
-            m!catchcheck Congratulations <@123>! You caught...
+            p!catchcheck (reply to a message)
+            p!catchcheck <message_id>
+            p!catchcheck Congratulations <@123>! You caught...
         """
         original_message = None
         catch_message = None
@@ -326,8 +326,8 @@ class StarboardCatch(commands.Cog):
                 await ctx.reply(
                     "Please provide a Poketwo catch message, message ID, or reply to one.\n"
                     "Examples:\n"
-                    "`m!catchcheck 123456789012345678` (message ID)\n"
-                    "Or reply to a message with just `m!catchcheck`",
+                    "`p!catchcheck 123456789012345678` (message ID)\n"
+                    "Or reply to a message with just `p!catchcheck`",
                     mention_author=False
                 )
                 return
