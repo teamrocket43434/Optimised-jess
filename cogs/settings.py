@@ -84,7 +84,7 @@ class Settings(commands.Cog):
         return self.bot.db
     
     # User settings
-    @commands.command(name="afk")
+    @commands.command(name="afk", aliases=["away"])
     async def afk_command(self, ctx):
         """Toggle global AFK status for collection and shiny hunt pings"""
         current_collection_afk = await self.db.is_collection_afk(ctx.author.id)
@@ -103,14 +103,14 @@ class Settings(commands.Cog):
         await ctx.reply(embed=embed, view=view, mention_author=False)
     
     # Server settings (admin only)
-    @commands.command(name="rare-role")
+    @commands.command(name="rare-role", aliases=["rr", "rarerole"])
     @commands.has_permissions(administrator=True)
     async def rare_role_command(self, ctx, role: discord.Role = None):
         """Set or clear the rare Pokemon ping role for this server
         
         Examples:
-            m!rare-role @Role    (set role)
-            m!rare-role none     (clear role)
+            p!rare-role @Role    (set role)
+            p!rare-role none     (clear role)
         """
         if role is None:
             await self.db.set_rare_role(ctx.guild.id, None)
@@ -131,14 +131,14 @@ class Settings(commands.Cog):
             else:
                 await ctx.reply("❌ Invalid role mention or ID. Use @role, role ID, or 'none' to clear.", mention_author=False)
     
-    @commands.command(name="regional-role")
+    @commands.command(name="regional-role", aliases=["regrole", "regional", "regionrole"])
     @commands.has_permissions(administrator=True)
     async def regional_role_command(self, ctx, role: discord.Role = None):
         """Set or clear the regional Pokemon ping role for this server
         
         Examples:
-            m!regional-role @Role    (set role)
-            m!regional-role none     (clear role)
+            p!regional-role @Role    (set role)
+            p!regional-role none     (clear role)
         """
         if role is None:
             await self.db.set_regional_role(ctx.guild.id, None)
@@ -159,7 +159,7 @@ class Settings(commands.Cog):
             else:
                 await ctx.reply("❌ Invalid role mention or ID. Use @role, role ID, or 'none' to clear.", mention_author=False)
     
-    @commands.command(name="server-settings")
+    @commands.command(name="server-settings", aliases=["ss", "ssettings", "serversettings"])
     async def server_settings_command(self, ctx):
         """View current server settings"""
         settings = await self.db.get_guild_settings(ctx.guild.id)
@@ -186,7 +186,7 @@ class Settings(commands.Cog):
         # Add note about starboard settings
         embed.add_field(
             name="⭐ Starboard Settings",
-            value="Use `m!starboard-settings` to view starboard channel configuration",
+            value="Use `p!starboard-settings` to view starboard channel configuration",
             inline=False
         )
         
@@ -194,7 +194,7 @@ class Settings(commands.Cog):
         await ctx.reply(embed=embed, mention_author=False)
     
     # Global settings (bot owner only)
-    @commands.command(name="set-low-prediction-channel")
+    @commands.command(name="set-low-prediction-channel", aliases=["setlowpred", "lowpredchannel"])
     @commands.is_owner()
     async def set_low_prediction_channel_command(self, ctx, channel: discord.TextChannel):
         """Set the global channel for low confidence predictions (bot owner only)"""
@@ -207,6 +207,63 @@ class Settings(commands.Cog):
             await ctx.reply("❌ Only the bot owner can use this command.", mention_author=False)
         elif isinstance(error, commands.BadArgument):
             await ctx.reply("❌ Invalid channel mention or ID.", mention_author=False)
+
+    @commands.command(name="only-pings", aliases=["op", "onlypings"])
+    @commands.has_permissions(administrator=True)
+    async def only_pings_command(self, ctx, enabled: bool = None):
+        """Toggle or view only-pings mode (Admin only)
+
+        When enabled, predictions will only be sent if:
+        - There are shiny hunters for the pokemon
+        - There are collectors for the pokemon
+        - The pokemon is rare/regional and has a ping role set
+
+        Examples:
+            p!only-pings         (view current status)
+            p!only-pings true    (enable)
+            p!only-pings false   (disable)
+        """
+        # If no argument, show current status
+        if enabled is None:
+            current_status = await self.db.get_only_pings(ctx.guild.id)
+            status_text = "enabled ✅" if current_status else "disabled ❌"
+
+            embed = discord.Embed(
+                title="Only-Pings Mode",
+                description=f"Current status: **{status_text}**\n\nWhen enabled, predictions are only sent when there are collectors, hunters, or rare/regional pings.",
+                color=EMBED_COLOR
+            )
+            embed.set_footer(text="Use 'p!only-pings true' or 'p!only-pings false' to change")
+            await ctx.reply(embed=embed, mention_author=False)
+            return
+
+        # Set new status
+        await self.db.set_only_pings(ctx.guild.id, enabled)
+
+        status = "enabled" if enabled else "disabled"
+        await ctx.reply(f"✅ Only-pings mode {status}", mention_author=False)
+
+    @only_pings_command.error
+    async def only_pings_error(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.reply("❌ You need administrator permissions to use this command.", mention_author=False)
+        elif isinstance(error, commands.BadArgument):
+            await ctx.reply("❌ Invalid argument. Use `true` or `false`", mention_author=False)
+
+    @commands.command(name="set-secondary-model-channel", aliases=["setsecondary", "secondarychannel"])
+    @commands.is_owner()
+    async def set_secondary_model_channel_command(self, ctx, channel: discord.TextChannel):
+        """Set the global channel for secondary model predictions (bot owner only)"""
+        await self.db.set_secondary_model_channel(channel.id)
+        await ctx.reply(f"✅ Secondary model channel set to {channel.mention}", mention_author=False)
+
+    @set_secondary_model_channel_command.error
+    async def set_secondary_model_channel_error(self, ctx, error):
+        if isinstance(error, commands.NotOwner):
+            await ctx.reply("❌ Only the bot owner can use this command.", mention_author=False)
+        elif isinstance(error, commands.BadArgument):
+            await ctx.reply("❌ Invalid channel mention or ID.", mention_author=False)
+
 
 async def setup(bot):
     await bot.add_cog(Settings(bot))
