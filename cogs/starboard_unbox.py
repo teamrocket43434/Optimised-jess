@@ -275,14 +275,14 @@ class StarboardUnbox(commands.Cog):
                     except Exception as e:
                         print(f"Error sending to global starboard channel: {e}")
     
-    @commands.command(name="unboxcheck")
+    @commands.command(name="unboxcheck", aliases=["uc", "checkunbox"])
     @commands.has_permissions(administrator=True)
     async def unbox_check_command(self, ctx, *, input_data: str = None):
         """Manually check a Poketwo box opening message and send to starboard
         
         Usage:
-            m!unboxcheck (reply to a message)
-            m!unboxcheck <message_id>
+            p!unboxcheck (reply to a message)
+            p!unboxcheck <message_id>
         """
         original_message = None
         unboxed_by_id = None
@@ -295,8 +295,8 @@ class StarboardUnbox(commands.Cog):
                 await ctx.reply(
                     "Please provide a message ID or reply to a Poketwo box opening message.\n"
                     "Examples:\n"
-                    "`m!unboxcheck 123456789012345678` (message ID)\n"
-                    "Or reply to a message with just `m!unboxcheck`",
+                    "`p!unboxcheck 123456789012345678` (message ID)\n"
+                    "Or reply to a message with just `p!unboxcheck`",
                     mention_author=False
                 )
                 return
