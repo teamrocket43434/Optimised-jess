@@ -63,6 +63,9 @@ class Database:
             # Guild settings
             await self.db.guild_settings.create_index("guild_id", unique=True)
 
+            # Categories - ADD THIS LINE
+            await self.db.categories.create_index([("guild_id", 1), ("name_lower", 1)], unique=True)
+
             print("✅ Database indexes created")
         except Exception as e:
             print(f"Warning: Could not create indexes: {e}")
@@ -430,3 +433,71 @@ class Database:
         """Get global unbox starboard channel"""
         settings = await self.db.global_settings.find_one({"_id": "starboard_unbox"})
         return settings.get('global_channel_id') if settings else None
+
+    # Category operations
+    async def create_category(self, guild_id: int, name: str, pokemon_list: List[str]):
+        """Create a new category"""
+        await self.db.categories.insert_one({
+            "guild_id": guild_id,
+            "name": name,
+            "name_lower": name.lower(),
+            "pokemon": pokemon_list
+        })
+
+    async def get_category(self, guild_id: int, name: str) -> Optional[dict]:
+        """Get a category by name (case-insensitive)"""
+        return await self.db.categories.find_one({
+            "guild_id": guild_id,
+            "name_lower": name.lower()
+        })
+
+    async def update_category(self, guild_id: int, name: str, pokemon_list: List[str]):
+        """Update a category's pokemon list"""
+        await self.db.categories.update_one(
+            {"guild_id": guild_id, "name_lower": name.lower()},
+            {"$set": {"pokemon": pokemon_list}}
+        )
+
+    async def delete_category(self, guild_id: int, name: str) -> bool:
+        """Delete a category"""
+        result = await self.db.categories.delete_one({
+            "guild_id": guild_id,
+            "name_lower": name.lower()
+        })
+        return result.deleted_count > 0
+
+    async def get_all_categories(self, guild_id: int) -> List[dict]:
+        """Get all categories for a guild"""
+        categories = await self.db.categories.find(
+            {"guild_id": guild_id},
+            {"name": 1, "pokemon": 1, "_id": 0}
+        ).to_list(length=None)
+        return categories
+
+    # Only-pings setting
+    async def set_only_pings(self, guild_id: int, enabled: bool):
+        """Set only-pings mode for a guild"""
+        await self.db.guild_settings.update_one(
+            {"guild_id": guild_id},
+            {"$set": {"only_pings": enabled}},
+            upsert=True
+        )
+
+    async def get_only_pings(self, guild_id: int) -> bool:
+        """Get only-pings setting for a guild"""
+        settings = await self.db.guild_settings.find_one({"guild_id": guild_id})
+        return settings.get('only_pings', False) if settings else False
+
+    # Secondary model channel
+    async def set_secondary_model_channel(self, channel_id: int):
+        """Set global secondary model prediction channel"""
+        await self.db.global_settings.update_one(
+            {"_id": "secondary_model"},
+            {"$set": {"channel_id": channel_id}},
+            upsert=True
+        )
+
+    async def get_secondary_model_channel(self) -> Optional[int]:
+        """Get global secondary model prediction channel"""
+        settings = await self.db.global_settings.find_one({"_id": "secondary_model"})
+        return settings.get('channel_id') if settings else None
