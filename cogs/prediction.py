@@ -203,13 +203,86 @@ class Prediction(commands.Cog):
             print(f"Prediction error: {e}")
             return f"Error: {str(e)[:100]}"
 
-    @commands.command(name="predict")
+    async def should_send_prediction(self, name: str, guild_id: int, hunters, collectors, ping_info) -> bool:
+        """Check if prediction should be sent based on only-pings setting"""
+        only_pings_enabled = await self.db.get_only_pings(guild_id)
+
+        if not only_pings_enabled:
+            return True  # Always send if disabled
+
+        # Check if there are any pings
+        has_hunters = isinstance(hunters, list) and len(hunters) > 0
+        has_collectors = isinstance(collectors, list) and len(collectors) > 0
+        has_ping_info = isinstance(ping_info, str) and ping_info
+
+        return has_hunters or has_collectors or has_ping_info
+
+    async def log_secondary_model_prediction(
+        self,
+        name: str,
+        confidence: str,
+        model_used: str,
+        message: discord.Message,
+        image_url: str
+    ):
+        """Log secondary model predictions to dedicated channel"""
+        if model_used not in ["secondary", "primary_fallback"]:
+            return  # Only log when secondary model was involved
+
+        secondary_channel_id = await self.db.get_secondary_model_channel()
+
+        if not secondary_channel_id:
+            return
+
+        secondary_channel = self.bot.get_channel(secondary_channel_id)
+
+        if not secondary_channel:
+            return
+
+        try:
+            # Determine model label
+            if model_used == "secondary":
+                model_label = "Secondary Model (High Confidence)"
+            else:  # primary_fallback
+                model_label = "Secondary Model Used (Fallback to Primary)"
+
+            embed = discord.Embed(
+                title=f"🔬 {model_label}",
+                description=(
+                    f"**Pokemon:** {name}\n"
+                    f"**Confidence:** {confidence}\n"
+                    f"**Server:** {message.guild.name}\n"
+                    f"**Channel:** {message.channel.mention}"
+                ),
+                color=0x00bfff
+            )
+
+            if image_url:
+                embed.set_thumbnail(url=image_url)
+
+            # Add jump button
+            view = discord.ui.View()
+            jump_button = discord.ui.Button(
+                label="Jump to Message",
+                url=message.jump_url,
+                emoji="🔗",
+                style=discord.ButtonStyle.link
+            )
+            view.add_item(jump_button)
+
+            await secondary_channel.send(embed=embed, view=view)
+            print(f"[SECONDARY-MODEL] Logged: {name} ({confidence}) - {model_used}")
+
+        except Exception as e:
+            print(f"[SECONDARY-MODEL] Failed to log: {e}")
+
+    @commands.command(name="predict", aliases=["pred", "p"])
     async def predict_command(self, ctx, *, image_url: str = None):
         """Predict Pokemon from image URL or replied message
 
         Examples:
-            m!predict <image_url>
-            m!predict (reply to a message with image)
+            p!predict <image_url>
+            p!predict (reply to a message with image)
         """
         # If no URL provided, check if replying to a message with image
         if not image_url and ctx.message.reference:
@@ -228,7 +301,7 @@ class Prediction(commands.Cog):
 
         # If still no image URL found
         if not image_url:
-            await ctx.reply("Please provide an image URL after m!predict or reply to a message with an image.", mention_author=False)
+            await ctx.reply("Please provide an image URL after p!predict or reply to a message with an image.", mention_author=False)
             return
 
         result = await self._predict_pokemon(image_url, ctx.guild.id)
@@ -255,7 +328,17 @@ class Prediction(commands.Cog):
 
             if image_url:
                 try:
-                    name, confidence = await self.predictor.predict(image_url, self.http_session)
+                    # Get prediction with model tracking
+                    cache_key = self.predictor._generate_cache_key(image_url)
+                    cached_result = self.predictor.cache.get(cache_key)
+
+                    if cached_result:
+                        name, confidence, model_used = cached_result
+                    else:
+                        name, confidence = await self.predictor.predict(image_url, self.http_session)
+                        # Get the model used from the last prediction
+                        cached_result = self.predictor.cache.get(cache_key)
+                        model_used = cached_result[2] if cached_result else "unknown"
 
                     if name and confidence:
                         formatted_output = format_pokemon_prediction(name, confidence)
@@ -281,7 +364,11 @@ class Prediction(commands.Cog):
                         if isinstance(ping_info, str) and ping_info:
                             formatted_output += f"\n{ping_info}"
 
+                        # ALWAYS send in auto-predict channel (ignore only-pings)
                         await message.reply(formatted_output)
+
+                        # Log to secondary model channel if secondary model was used
+                        await self.log_secondary_model_prediction(name, confidence, model_used, message, image_url)
 
                 except ValueError as e:
                     # Handle image loading errors (404, expired URLs, etc.)
@@ -312,17 +399,23 @@ class Prediction(commands.Cog):
 
                         if image_url:
                             try:
-                                # Use async prediction
-                                name, confidence = await self.predictor.predict(image_url, self.http_session)
+                                # Get prediction with model tracking
+                                cache_key = self.predictor._generate_cache_key(image_url)
+                                cached_result = self.predictor.cache.get(cache_key)
+
+                                if cached_result:
+                                    name, confidence, model_used = cached_result
+                                else:
+                                    name, confidence = await self.predictor.predict(image_url, self.http_session)
+                                    # Get the model used from the last prediction
+                                    cached_result = self.predictor.cache.get(cache_key)
+                                    model_used = cached_result[2] if cached_result else "unknown"
 
                                 if name and confidence:
                                     # Parse confidence
                                     confidence_str = str(confidence).rstrip('%')
                                     try:
                                         confidence_value = float(confidence_str)
-
-                                        # ALWAYS send the prediction in the spawn channel
-                                        formatted_output = format_pokemon_prediction(name, confidence)
 
                                         # Get all ping information concurrently
                                         tasks = [
@@ -334,19 +427,28 @@ class Prediction(commands.Cog):
                                         results = await asyncio.gather(*tasks, return_exceptions=True)
                                         hunters, collectors, ping_info = results
 
-                                        # Handle results safely
-                                        if isinstance(hunters, list) and hunters:
-                                            formatted_output += f"\nShiny Hunters: {' '.join(hunters)}"
+                                        # Check if should send based on only-pings setting
+                                        should_send = await self.should_send_prediction(
+                                            name, message.guild.id, hunters, collectors, ping_info
+                                        )
 
-                                        if isinstance(collectors, list) and collectors:
-                                            collector_mentions = " ".join([f"<@{user_id}>" for user_id in collectors])
-                                            formatted_output += f"\nCollectors: {collector_mentions}"
+                                        if should_send:
+                                            # Format and send prediction in spawn channel
+                                            formatted_output = format_pokemon_prediction(name, confidence)
 
-                                        if isinstance(ping_info, str) and ping_info:
-                                            formatted_output += f"\n{ping_info}"
+                                            # Handle results safely
+                                            if isinstance(hunters, list) and hunters:
+                                                formatted_output += f"\nShiny Hunters: {' '.join(hunters)}"
 
-                                        # Send prediction in spawn channel
-                                        await message.reply(formatted_output)
+                                            if isinstance(collectors, list) and collectors:
+                                                collector_mentions = " ".join([f"<@{user_id}>" for user_id in collectors])
+                                                formatted_output += f"\nCollectors: {collector_mentions}"
+
+                                            if isinstance(ping_info, str) and ping_info:
+                                                formatted_output += f"\n{ping_info}"
+
+                                            # Send prediction in spawn channel
+                                            await message.reply(formatted_output)
 
                                         # If low confidence, ALSO send to low prediction channel
                                         if confidence_value < PREDICTION_CONFIDENCE:
@@ -378,6 +480,9 @@ class Prediction(commands.Cog):
                                                     await low_channel.send(embed=embed, view=view)
 
                                                 print(f"Low confidence prediction: {name} ({confidence}) in {message.guild.name}")
+
+                                        # Log to secondary model channel if secondary model was used
+                                        await self.log_secondary_model_prediction(name, confidence, model_used, message, image_url)
 
                                     except ValueError:
                                         print(f"Could not parse confidence value: {confidence}")
