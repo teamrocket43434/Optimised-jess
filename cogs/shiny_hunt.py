@@ -47,16 +47,16 @@ class ShinyHunt(commands.Cog):
         # Otherwise return the Pokemon's name
         return pokemon.get('name', pokemon_name)
     
-    @commands.command(name="sh")
+    @commands.command(name="sh", aliases=["hunt", "shinyhunt"])
     async def shiny_hunt_command(self, ctx, *, args: str = None):
         """Manage shiny hunt
         
         Examples:
-            m!sh                                    (check current hunt)
-            m!sh Meowth                            (hunt only base Meowth)
-            m!sh Meowth all                        (hunt all Meowth variants)
-            m!sh Alolan Meowth, Galarian Meowth   (hunt specific variants)
-            m!sh clear                              (clear hunt)
+            p!sh                                    (check current hunt)
+            p!sh Meowth                            (hunt only base Meowth)
+            p!sh Meowth all                        (hunt all Meowth variants)
+            p!sh Alolan Meowth, Galarian Meowth   (hunt specific variants)
+            p!sh clear                              (clear hunt)
         """
         if not args:
             # Check current hunt
@@ -143,9 +143,9 @@ class ShinyHunt(commands.Cog):
                     description=f"**{hunted_pokemon}** has multiple forms/variants!\n\n"
                                 f"You will **only** be pinged for **{hunted_pokemon}**, not its other forms.\n\n"
                                 f"To hunt all variants, use:\n"
-                                f"`m!sh {base_name} all`\n\n"
+                                f"`p!sh {base_name} all`\n\n"
                                 f"Or specify the exact variants you want:\n"
-                                f"`m!sh Alolan {base_name}, Galarian {base_name}` <- just an example",
+                                f"`p!sh Alolan {base_name}, Galarian {base_name}` <- just an example",
                     color=0xFFA500  # Orange color for warning
                 )
                 await ctx.reply(embed=embed, mention_author=False)
