@@ -413,13 +413,13 @@ class Prediction:
         primary_confidence_pct = primary_prob * 100
         
         # If primary confidence >= 80%, use it
-        if primary_confidence_pct >= 80.0:
+        if primary_confidence_pct >= 85.0:
             confidence = f"{primary_confidence_pct:.2f}%"
             result = (primary_name, confidence, "primary")
             self.cache.set(cache_key, result)
             return primary_name, confidence
         
-        # Primary confidence < 80%, try secondary model
+        # Primary confidence < 85%, try secondary model
         # Preprocess image for secondary model (336x224 - WIDTH x HEIGHT)
         secondary_width = self.secondary_metadata["image_width"]  # 336
         secondary_height = self.secondary_metadata["image_height"]  # 224
