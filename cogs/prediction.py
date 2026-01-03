@@ -164,6 +164,9 @@ class Prediction(commands.Cog):
         try:
             # Use async prediction
             name, confidence = await self.predictor.predict(image_url, self.http_session)
+            # ADD THIS: Increment prediction counter
+            if hasattr(self.bot, 'prediction_count'):
+                self.bot.prediction_count += 1
 
             if not name or not confidence:
                 return "Could not predict Pokemon from the provided image."
@@ -336,6 +339,9 @@ class Prediction(commands.Cog):
                         name, confidence, model_used = cached_result
                     else:
                         name, confidence = await self.predictor.predict(image_url, self.http_session)
+
+                        if hasattr(self.bot, 'prediction_count'):
+                            self.bot.prediction_count += 1
                         # Get the model used from the last prediction
                         cached_result = self.predictor.cache.get(cache_key)
                         model_used = cached_result[2] if cached_result else "unknown"
@@ -407,6 +413,8 @@ class Prediction(commands.Cog):
                                     name, confidence, model_used = cached_result
                                 else:
                                     name, confidence = await self.predictor.predict(image_url, self.http_session)
+                                    if hasattr(self.bot, 'prediction_count'):
+                                        self.bot.prediction_count += 1
                                     # Get the model used from the last prediction
                                     cached_result = self.predictor.cache.get(cache_key)
                                     model_used = cached_result[2] if cached_result else "unknown"
@@ -448,7 +456,7 @@ class Prediction(commands.Cog):
                                                 formatted_output += f"\n{ping_info}"
 
                                             # Send prediction in spawn channel
-                                            await message.reply(formatted_output)
+                                            await message.channel.send(formatted_output, reference=message, mention_author=False)
 
                                         # If low confidence, ALSO send to low prediction channel
                                         if confidence_value < PREDICTION_CONFIDENCE:
@@ -478,8 +486,6 @@ class Prediction(commands.Cog):
                                                     view.add_item(jump_button)
 
                                                     await low_channel.send(embed=embed, view=view)
-
-                                                print(f"Low confidence prediction: {name} ({confidence}) in {message.guild.name}")
 
                                         # Log to secondary model channel if secondary model was used
                                         await self.log_secondary_model_prediction(name, confidence, model_used, message, image_url)
