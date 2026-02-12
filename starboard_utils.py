@@ -51,12 +51,17 @@ def get_gender_emoji(gender: Optional[str]) -> str:
 def find_pokemon_image_url(pokemon_name: str, is_shiny: bool = False, gender: Optional[str] = None, is_gigantamax: bool = False) -> Optional[str]:
     """Find Pokemon image URL using CDN mapping CSV"""
     cdn_mapping = load_cdn_mapping()
+    normalized_name = pokemon_name.strip().lower()
 
     # Build the lookup name
     if is_gigantamax:
-        lookup_name = f"gigantamax {pokemon_name.strip().lower()}"
+        # Eternatus with Gigantamax factor is Eternamax Eternatus in the CDN
+        if normalized_name == "eternatus":
+            lookup_name = "eternamax eternatus"
+        else:
+            lookup_name = f"gigantamax {normalized_name}"
     else:
-        lookup_name = pokemon_name.strip().lower()
+        lookup_name = normalized_name
 
     cdn_number = cdn_mapping.get(lookup_name)
 
@@ -64,13 +69,15 @@ def find_pokemon_image_url(pokemon_name: str, is_shiny: bool = False, gender: Op
         print(f"DEBUG: No CDN number found for '{lookup_name}'")
         return None
 
-    # Determine if we should use the female sprite (F suffix)
-    use_female_sprite = (
-        gender == 'female'
-        and pokemon_name.strip() in GENDER_DIFFERENCE_POKEMON
-    )
-
-    suffix = f"{cdn_number}F" if use_female_sprite else cdn_number
+    # Gigantamax/Eternamax forms have no gender difference sprites
+    if is_gigantamax:
+        suffix = cdn_number
+    else:
+        use_female_sprite = (
+            gender == 'female'
+            and pokemon_name.strip() in GENDER_DIFFERENCE_POKEMON
+        )
+        suffix = f"{cdn_number}F" if use_female_sprite else cdn_number
 
     if is_shiny:
         return f"https://cdn.poketwo.net/shiny/{suffix}.png"
