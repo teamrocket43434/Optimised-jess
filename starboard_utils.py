@@ -55,42 +55,38 @@ def find_pokemon_image_url(pokemon_name: str, is_shiny: bool = False, gender: Op
                         return base_url.replace('/images/', '/shiny/')
                     return base_url
     
-    # Function to search for Pokemon with proper female variant handling
-    def search_pokemon(search_name: str, prefer_female: bool = False) -> Optional[str]:
-        # Try exact match
+    # Function to search for Pokemon with proper gender variant handling
+    def search_pokemon(search_name: str, target_gender: Optional[str] = None) -> Optional[str]:
+        gender_suffix = f"{search_name}_{target_gender}" if target_gender in ('male', 'female') else None
+
+        # Pass 1: exact matches — gender-specific entry takes priority over base name
+        gender_fallback = None
         for key, value in pokemon_data.items():
             pokemon_entry_name = value.get('name', '').lower()
-            
-            # Handle female variants
-            if prefer_female and gender == 'female':
-                if pokemon_entry_name == f"{search_name}_female":
-                    return value.get('image_url', '')
-            
-            # Try exact match
-            if pokemon_entry_name == search_name:
+            if gender_suffix and pokemon_entry_name == gender_suffix:
                 return value.get('image_url', '')
-        
-        # Try partial matching
+            if pokemon_entry_name == search_name and gender_fallback is None:
+                gender_fallback = value.get('image_url', '')
+
+        if gender_fallback is not None:
+            return gender_fallback
+
+        # Pass 2: partial matches — same priority order
         for key, value in pokemon_data.items():
             pokemon_entry_name = value.get('name', '').lower()
-            
-            # Handle female variants in partial matching
-            if prefer_female and gender == 'female':
-                if f"{search_name}_female" in pokemon_entry_name or pokemon_entry_name in f"{search_name}_female":
-                    return value.get('image_url', '')
-            
-            # Regular partial matching
+            if gender_suffix and (gender_suffix in pokemon_entry_name or pokemon_entry_name in gender_suffix):
+                return value.get('image_url', '')
             if search_name in pokemon_entry_name or pokemon_entry_name in search_name:
                 return value.get('image_url', '')
-        
+
         return None
-    
-    # Search for Pokemon image URL
-    base_url = search_pokemon(normalized_name, prefer_female=True)
-    
-    # If female variant not found, try base name
-    if base_url is None and gender == 'female':
-        base_url = search_pokemon(normalized_name, prefer_female=False)
+
+    # Search for Pokemon image URL — try gender-specific variant first, then fall back to base
+    base_url = search_pokemon(normalized_name, target_gender=gender)
+
+    # If nothing found with gender, retry without (covers Pokémon with no gender variants in data)
+    if base_url is None and gender in ('male', 'female'):
+        base_url = search_pokemon(normalized_name, target_gender=None)
     
     if base_url and is_shiny:
         return base_url.replace('/images/', '/shiny/')
